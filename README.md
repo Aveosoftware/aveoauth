@@ -1,92 +1,443 @@
-# AveoAuth
+# Authentication
 
+Apple login is been implemented but not ready for use.
 
+## Platform Support
 
-## Getting started
+| Android | iOS | MacOS | Web | Linux | Windows |
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+| :----: | :-----: | :-: | :---: | :-: | :---: | :-----: |
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+| Login from | &check; | &cross; | &cross; | &cross; | &cross; | &cross; |
 
-## Add your files
+## Configration
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+Generate and Add SHA key to Firebase
 
+For Debug mode:
+
+```bash
+keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/aveo-mobile-products/aveoauth.git
-git branch -M main
-git push -uf origin main
+
+For Release mode:
+
+```bash
+keytool -list -v -keystore {keystore_name} -alias {alias_name}
 ```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/aveo-mobile-products/aveoauth/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+To use this plugin, add `auth` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+Import package in your flutter application
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```dart
+import 'package:aveoauth/aveoauth.dart';
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### General utility
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+- You can use below method to get the authentication type
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+```dart
+TextButton(
+  child: const Text('Get Current Login'),
+  onPressed: () => debugPrint(Mode().showAppLoginMode.toString())),
+```
 
-## License
-For open source projects, say how it is licensed.
+# Google Login
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Configuration for Google Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+- Add dependency in **android/app/src/build.grid**
+
+```dart
+dependencies {
+	implementation 'com.android.support:multidex:1.0.3'
+	}
+defaultConfig {
+	multiDexEnabled true
+	}
+```
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  GoogleLogin {
+@override
+Widget  build(BuildContext  context) {
+	return  Column(children: [
+              TextButton(
+                onPressed: () => signInWithGoogle(
+                    firebaseInstance: FirebaseAuth.instance,
+                    onSuccess: (message) {},
+                    onError: (error) {}),
+                child: const Text(
+                  'Google Login',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              ),
+              TextButton(
+                onPressed: () =>
+                    signOutFromGoogle(firebaseInstance: FirebaseAuth.instance),
+                child: const Text(
+                  'Google Logout',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              )
+            ]);
+    }
+```
+
+# Github Login
+
+## Configuration for Github Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+- While adding provider (`Github`) -> copy redirectUrl
+- Register new [OAuth](https://github.com/settings/applications/new) application adding the `redirectUrl` and Register Application
+- Copy `Client ID` and `Client Secret` into Firebase Console and Enable and Save it.
+- Add dependency in **android/app/src/build.grid**
+
+```dart
+defaultConfig {
+	minSdkVersion 19
+	}
+```
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  GithubLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(children: [
+              TextButton(
+                  onPressed: () => signInWithGithub(
+                      context: context,
+                      clientId: [YOUR_CLIENTID],
+                      clientSecret: [YOUR_CLIENTSECRET_KEY],
+                      redirectUrl:
+                          'https://yourproject.firebaseapp.com/__/auth/handler',
+                      firebaseInstance: FirebaseAuth.instance,
+                      onSuccess: (message) {},
+                      onError: (error) {}),
+                  child: const Text(
+                    'Github Login',
+                    style: TextStyle(color: Colors.black54),
+                  )),
+              TextButton(
+                onPressed: () =>
+                    signOutFromGithub(firebaseInstance: FirebaseAuth.instance),
+                child: const Text(
+                  'Github Logout',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              )
+            ]);
+}
+```
+
+# Facebook Login
+
+## Configuration for Github Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+- Register on [FacebookDev](https://developers.facebook.com/apps/create/)
+- Add repository your_app -> gradle -> build.gradle (Project)
+
+```dart
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+```
+
+- Add repository your_app -> gradle -> build.gradle (Module)
+
+```dart
+dependencies {
+	 implementation 'com.facebook.android:facebook-login:latest.release'
+	}
+```
+
+- Open your `/app/res/values/strings.xml` file.
+- Add string elements with the names facebook_app_id, `fb_login_protocol_scheme` and` facebook_client_token`, and set the values to your `App ID` and `Client Token`.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">[APP-NAME]</string>
+    <string name="facebook_app_id">[APP-ID]</string>
+    <string name="fb_login_protocol_scheme">fb[APP-ID]</string>
+    <string name="facebook_client_token">[CLIENT-TOKEN]</string>
+</resources>
+```
+
+- In `app -> src -> main -> AndroidManifest.xml` add the following under `application`
+
+```xml
+<application>
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+    <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+    <activity android:name="com.facebook.FacebookActivity"
+        android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:label="@string/app_name" />
+    <activity
+        android:name="com.facebook.CustomTabActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="@string/fb_login_protocol_scheme" />
+        </intent-filter>
+    </activity>
+</application>
+```
+
+- In app -> src -> main -> AndroidManifest.xml add the following under `manifest`
+
+```xml
+</manifest>
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>
+```
+
+- In Facebook Dev console Add Platform as Android under Basic Settings
+- Key Hash in console by running the following in the terminal.
+
+```bash
+keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
+```
+
+- Add `Package Names` and `Class Name` from app -> src -> main -> AndroidManifest.xml
+- Add `App ID` and `App secret` into provider (`Facebok`) from Facebook developer console.
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  FacebookLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(
+              children: [
+                TextButton(
+                  onPressed: () => signInWithFacebook(
+                      firebaseInstance: FirebaseAuth.instance,
+                      onSuccess: (message) {},
+                      onError: (error) {}),
+                  child:const Text(
+                    'Facebook Login',
+                    style:  TextStyle(color: Colors.black54),
+                  ),
+                ),
+                TextButton(
+                onPressed: () =>
+                    signOutFromFacebook(firebaseInstance: FirebaseAuth.instance),
+                child: const Text(
+                  'Facebook Logout',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              )
+              ],
+            );
+}
+```
+
+# Twitter Login
+
+## Configuration for Twitter Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+- While adding provider (`Twitter`) -> copy redirectUrl
+- Register new [OAuth](https://developer.twitter.com/)
+- Under `User authentication settings -> Edit` enable `OAuth 2.0` select `Type of App`
+- Register a different `Callback URI / Redirect URL` on Twitter Developers replacing default Firebase Callback URI https://abcdefg.firebaseapp.com/__/auth/handler
+- Add `API key` and `API secret` into Firebase Console and Enable and Save it.
+- Apply for elevated access on Twitter from [portal](https://developer.twitter.com/en/portal/products/elevated)
+- Add the dependency for Android in `app -> src -> main -> AndroidManifest.xml`
+
+```xml
+<intent-filter>
+  <action android:name="android.intent.action.VIEW" />
+  <category android:name="android.intent.category.DEFAULT" />
+  <category android:name="android.intent.category.BROWSABLE" />
+  <data android:scheme="[YOUR_CALLBACK_URI_SCHEMA]"
+        android:host="[HOST_IS_OPTIONAL]" />
+</intent-filter>
+```
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  TwitterSocialLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(
+              children: [
+                TextButton(
+                    onPressed: () => signInWithTwitter(
+                        context: context,
+                        apiKey: [API_KEY],
+                        apiSecretKey: [API_SECRET_KEY],
+                        redirectURI: 'yourproject://',
+                        firebaseInstance: FirebaseAuth.instance,
+                        onSuccess: (message) {},
+                        onError: (error) {}),
+                    child: const Text(
+                      'Twitter Login',
+                      style: TextStyle(color: Colors.black54),
+                    )),
+                TextButton(
+                    onPressed: () => signOutFromFacebook(
+                        firebaseInstance: FirebaseAuth.instance),
+                    child: const Text(
+                      'Twitter Logout',
+                      style: TextStyle(color: Colors.black54),
+                    )),
+              ],
+            ),
+}
+```
+
+# Phone Login
+
+## Configuration for Phone Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+- Add provider (`Phone`) on Firebase Console
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  PhoneLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(
+              children: [
+                TextButton(
+                    onPressed: () => signInWithPhone(
+                        phoneNumber: [YOUR_PHONE_NUMBER],
+                        smsCode: [YOUR_SMS_CODE],
+                        firebaseInstance: FirebaseAuth.instance,
+                        onSuccess: (message) {
+                          snackBar(message);
+                        },
+                        onError: (error) {
+                          snackBar(error);
+                        }),
+                    child: const Text(
+                      'Phone Login',
+                      style: TextStyle(color: Colors.black54),
+                    )),
+                TextButton(
+                    onPressed: () => signOutFromPhone(
+                        firebaseInstance: FirebaseAuth.instance),
+                    child: const Text(
+                      'Phone Logout',
+                      style: TextStyle(color: Colors.black54),
+                    )),
+              ],
+            ),
+}
+```
+
+# Firebase-Email Login
+
+## Configuration for Firebase-Email Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  FirebaseEmailLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(
+              children: [
+                TextButton(
+                  onPressed: () => signInWithFirebaseEmail(
+                    firebaseInstance: FirebaseAuth.instance,
+                    email: [YOUR_EMAIL],
+                    password: [YOUR_PASSWORD],
+                    onSuccess: (message) {
+                      snackBar(message);
+                    },
+                    onError: (error) {
+                      snackBar(error);
+                    },
+                  ),
+                  child: const Text(
+                    'Firebase-Email Login',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+                TextButton(
+                    onPressed: () => signOutFromFirebaseEmail(
+                        firebaseInstance: FirebaseAuth.instance),
+                    child: const Text(
+                      'Firebase-Email Logout',
+                      style: TextStyle(color: Colors.black54),
+                    )),
+              ],
+            ),
+}
+```
+
+# Biometric Login
+
+## Configuration for Biometric Login
+
+Add the dependency for Android in `app -> src -> main -> AndroidManifest.xml` under `<manifest>`
+
+```xml
+<uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+```
+
+Add the dependency for Android in `app -> src -> main -> kotlin -> com -> example -> example -> MainActivity.kt` replace with below snippet excluding package declaration.
+
+```kotlin
+import io.flutter.embedding.android.FlutterFragmentActivity
+import io.flutter.plugins.GeneratedPluginRegistrant
+import io.flutter.embedding.engine.FlutterEngine
+import androidx.annotation.NonNull;
+
+class MainActivity: FlutterFragmentActivity() {
+    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
+    }
+}
+```
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  FingerprintLogin {
+@override
+Widget  build(BuildContext  context) {
+	return TextButton(
+		onPressed: () => signInWithFirebaseEmail(
+                    firebaseInstance: FirebaseAuth.instance,
+                    email: [YOUR_EMAIL],
+                    password: [YOUR_PASSWORD],
+                    onSuccess: (message) {
+                      snackBar(message);
+                    },
+                    onError: (error) {
+                      snackBar(error);
+                    },)
+		child: Text('Firebase-Email Login',style: const  TextStyle(color: Colors.black54),
+	);
+}
+```

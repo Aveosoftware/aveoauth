@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">auth-exp</string>
+    <string name="facebook_app_id">385760256984906</string>
+    <string name="fb_login_protocol_scheme">fb385760256984906</string>
+    <string name="facebook_client_token">25adf19cfe6cfa229bf6e87f0a930b8f</string>
+</resources>
