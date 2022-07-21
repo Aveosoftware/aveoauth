@@ -26,3 +26,4 @@ part 'utils/enum_to_string_converter.dart';
 part 'utils/exception_handling_helper.dart';
 part 'utils/logout_helper.dart';
 part 'utils/custom_types.dart';
+part 'utils/validators.dart';
