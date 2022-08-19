@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '313488232645',
     projectId: 'authmelosmodule',
     storageBucket: 'authmelosmodule.appspot.com',
+    androidClientId: '313488232645-7p7q57ls1ecb3j9p15nhn9c20ajafhct.apps.googleusercontent.com',
     iosClientId: '313488232645-ikfsq0bbmun5qjigudasj329fb3805ce.apps.googleusercontent.com',
     iosBundleId: 'com.example.example',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '313488232645',
     projectId: 'authmelosmodule',
     storageBucket: 'authmelosmodule.appspot.com',
+    androidClientId: '313488232645-7p7q57ls1ecb3j9p15nhn9c20ajafhct.apps.googleusercontent.com',
     iosClientId: '313488232645-ikfsq0bbmun5qjigudasj329fb3805ce.apps.googleusercontent.com',
     iosBundleId: 'com.example.example',
   );

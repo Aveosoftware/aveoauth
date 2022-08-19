@@ -1,42 +1,58 @@
 part of '../aveoauth.dart';
 
+typedef PhoneCodeSent = void Function(
+  String verificationId,
+  int? forceResendingToken,
+);
 mixin PhoneLogin {
-  signInWithPhone(
+  verifyPhoneNumber(
       {required FirebaseAuth firebaseInstance,
       required SussessCallback onSuccess,
       required ErrorCallback onError,
       required String phoneNumber,
-      required String smsCode}) async {
-    // Trigger the authentication flow
+      required PhoneCodeSent codeSent}) {
     try {
       firebaseInstance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential userCredential) async {
-          await firebaseInstance.signInWithCredential(userCredential);
+          await firebaseInstance
+              .signInWithCredential(userCredential)
+              .then((value) => {onSuccess('Opt sent successfully')});
         },
         verificationFailed: (FirebaseAuthException e) {
+          onError(e.message ?? 'Phone number verification failed');
           if (e.code == 'invalid-phone-number') {
             debugPrint('The provided phone number is not valid.');
           }
         },
-        codeSent: (String verificationId, int? resendToken) async {
-          PhoneAuthCredential userCredential = PhoneAuthProvider.credential(
-              verificationId: verificationId, smsCode: smsCode);
-          await firebaseInstance.signInWithCredential(userCredential);
-          try {
-            Mode().changeLoginMode = LoginMode.phone;
-            onSuccess('$phoneNumber Logged in successfully');
-          } on FirebaseAuthException catch (e) {
-            String errorMessage = ExceptionHandlingHelper.handleException(e.code);
-            onError(errorMessage);
-          }
-        },
+        codeSent: codeSent,
         codeAutoRetrievalTimeout: (String verificationId) {
           // Auto-resolution timed out...
         },
       );
     } catch (error) {
       debugPrint(error.toString());
+    }
+  }
+
+  signInWithPhone(
+      {required FirebaseAuth firebaseInstance,
+      required SussessCallback onSuccess,
+      required ErrorCallback onError,
+      required String smsCode,
+      required String phoneNumber,
+      required String verificationId}) async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: smsCode);
+    // Trigger the authentication flow
+    try {
+      firebaseInstance.signInWithCredential(credential).then((value) => {
+            onSuccess('$phoneNumber Logged in successfully'),
+            Mode().changeLoginMode = LoginMode.phone,
+          });
+    } catch (e) {
+      onError(e.toString());
+      debugPrint(e.toString());
     }
   }
 

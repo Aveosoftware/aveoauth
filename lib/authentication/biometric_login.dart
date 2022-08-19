@@ -7,7 +7,10 @@ mixin BiometricLogin {
     try {
       return await _auth.canCheckBiometrics;
     } on PlatformException catch (e) {
-      (e);
+      debugPrint(e.toString());
+      return false;
+    } catch (e) {
+      debugPrint(e.toString());
       return false;
     }
   }
@@ -20,6 +23,9 @@ mixin BiometricLogin {
       }
       return await _auth.getAvailableBiometrics();
     } on PlatformException catch (e) {
+      debugPrint(e.toString());
+      return <BiometricType>[];
+    } catch (e) {
       debugPrint(e.toString());
       return <BiometricType>[];
     }
@@ -49,6 +55,9 @@ mixin BiometricLogin {
       onSuccess('Logged in successfully');
     } on PlatformException catch (e) {
       onError(e.message ?? 'Error while logging in');
+      debugPrint(e.toString());
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

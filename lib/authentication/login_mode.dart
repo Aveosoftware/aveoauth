@@ -19,7 +19,9 @@ LoginMode? _appLoginMode = getPreference.read('LoginMode') == null
     ? LoginMode.none
     : EnumToString.fromString(
         LoginMode.values, getPreference.read('LoginMode'));
-
+  mixin CurrentLoginMode {
+    get currentLoginMode => _appLoginMode;
+  }
 class Mode {
   get showAppLoginMode => _appLoginMode;
   set changeLoginMode(LoginMode value) {

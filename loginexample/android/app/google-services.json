@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "885755172961",
+    "project_id": "authmelosmodule2",
+    "storage_bucket": "authmelosmodule2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885755172961:android:78e908d36ff31da674f220",
+        "android_client_info": {
+          "package_name": "com.example.loginexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "885755172961-tpgt16j1i8knfutnuo1dcf087v75ne0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcMxYrkLrxkThVZrf4O-o4sMtyc24HmnY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "885755172961-tpgt16j1i8knfutnuo1dcf087v75ne0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

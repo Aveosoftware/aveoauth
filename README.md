@@ -48,7 +48,7 @@ TextButton(
 
 # Google Login
 
-## Configuration for Google Login
+## Configuration for Google Login for Android
 
 - Add **Firebase** to your **Flutter Application**
   [Adding Firebase](https://firebase.google.com/docs/flutter/)
@@ -62,7 +62,27 @@ defaultConfig {
 	multiDexEnabled true
 	}
 ```
+## Configuration for Google Login for IOS
+- Make sure the file you downloaded file is named `GoogleService-Info.plist`.
+- Move or copy `GoogleService-Info.plist` into the [my_project]/ios/Runner directory.
+- Open `Xcode`, then right-click on Runner directory and select Add Files to `"Runner"`.
+- Select `GoogleService-Info.plist` from the file manager.
+- A dialog will show up and ask you to select the targets, select the Runner target.
+- In `ios/Runner/Base.Iproj/Info.plist` add below
+```plist
+<key>CFBundleURLTypes</key>
+<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
 
+			<string>com.googleusercontent.apps.861823949799-vc35cprkp249096uujjn0vvnmcvjppkn</string>
+		</array>
+	</dict>
+</array>
+```
 ## Usage
 
 ```dart
@@ -141,10 +161,60 @@ Widget  build(BuildContext  context) {
             ]);
 }
 ```
+# Apple Login
+
+## Configuration for Apple Login
+
+- Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+- While adding provider (`Github`) -> copy redirectUrl
+- Go to apple developer account -> Identifier -> Click on the add button -> Select App ID -> Continue -> App -> Continue -> Select "Sign In with Apple" -> Continue -> Register
+- Register new [OAuth](https://github.com/settings/applications/new) application adding the `redirectUrl` and Register Application
+- Copy `Client ID` and `Client Secret` into Firebase Console and Enable and Save it.
+- Add dependency in **android/app/src/build.grid**
+
+```dart
+defaultConfig {
+	minSdkVersion 19
+	}
+```
+
+## Usage
+
+```dart
+class  _MyWidget  extends StatelessWidget with  GithubLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(children: [
+              TextButton(
+                  onPressed: () => signInWithGithub(
+                      context: context,
+                      clientId: [YOUR_CLIENTID],
+                      clientSecret: [YOUR_CLIENTSECRET_KEY],
+                      redirectUrl:
+                          'https://yourproject.firebaseapp.com/__/auth/handler',
+                      firebaseInstance: FirebaseAuth.instance,
+                      onSuccess: (message) {},
+                      onError: (error) {}),
+                  child: const Text(
+                    'Github Login',
+                    style: TextStyle(color: Colors.black54),
+                  )),
+              TextButton(
+                onPressed: () =>
+                    signOutFromGithub(firebaseInstance: FirebaseAuth.instance),
+                child: const Text(
+                  'Github Logout',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              )
+            ]);
+}
+```
 
 # Facebook Login
 
-## Configuration for Github Login
+## Configuration for Facebook Login on Android
 
 - Add **Firebase** to your **Flutter Application**
   [Adding Firebase](https://firebase.google.com/docs/flutter/)
@@ -166,7 +236,7 @@ dependencies {
 	}
 ```
 
-- Open your `/app/res/values/strings.xml` file.
+- Open your `/app/src/main/res/values/strings.xml` file.
 - Add string elements with the names facebook_app_id, `fb_login_protocol_scheme` and` facebook_client_token`, and set the values to your `App ID` and `Client Token`.
 
 ```xml
@@ -211,7 +281,7 @@ dependencies {
 ```
 
 - In Facebook Dev console Add Platform as Android under Basic Settings
-- Key Hash in console by running the following in the terminal.
+- Key Hash in console by running the following in the terminal and add the password as `android`
 
 ```bash
 keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
@@ -220,6 +290,30 @@ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore |
 - Add `Package Names` and `Class Name` from app -> src -> main -> AndroidManifest.xml
 - Add `App ID` and `App secret` into provider (`Facebok`) from Facebook developer console.
 
+```plist
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+  <key>CFBundleURLSchemes</key>
+  <array>
+    <string>fb[APP-ID]</string>
+  </array>
+  </dict>
+</array>
+<key>FacebookAppID</key>
+<string>[APP-ID]</string>
+<key>FacebookClientToken</key>
+<string>[CLIENT-TOKEN]</string>
+<key>FacebookDisplayName</key>
+<string>[APP-NAME]</string>
+```
+```plist
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>fbapi</string>
+  <string>fb-messenger-share-api</string>
+</array>
+```
 ## Usage
 
 ```dart
@@ -397,7 +491,7 @@ Widget  build(BuildContext  context) {
 
 # Biometric Login
 
-## Configuration for Biometric Login
+## Configuration for Biometric Login for Android
 
 Add the dependency for Android in `app -> src -> main -> AndroidManifest.xml` under `<manifest>`
 
@@ -419,7 +513,12 @@ class MainActivity: FlutterFragmentActivity() {
     }
 }
 ```
-
+## Configuration for Biometric Login for IOS
+In `ios/Runner/Base.Iproj/Info.plist` add below
+```plist
+<key>NSFaceIDUsageDescription</key>
+<string>Why is my app authenticating using face id?</string>
+```
 ## Usage
 
 ```dart
