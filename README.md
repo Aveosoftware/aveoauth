@@ -8,7 +8,7 @@ Apple login is been implemented but not ready for use.
 
 | :----: | :-----: | :-: | :---: | :-: | :---: | :-----: |
 
-| Login from | &check; | &cross; | &cross; | &cross; | &cross; | &cross; |
+| Login from | &check; | &check; | &cross; | &cross; | &cross; | &cross; |
 
 ## Configration
 
@@ -77,7 +77,6 @@ defaultConfig {
 		<string>Editor</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
-
 			<string>com.googleusercontent.apps.861823949799-vc35cprkp249096uujjn0vvnmcvjppkn</string>
 		</array>
 	</dict>
@@ -290,6 +289,8 @@ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore |
 - Add `Package Names` and `Class Name` from app -> src -> main -> AndroidManifest.xml
 - Add `App ID` and `App secret` into provider (`Facebok`) from Facebook developer console.
 
+## Configuration for Facebook Login on IOS
+
 ```plist
 <key>CFBundleURLTypes</key>
 <array>
@@ -404,12 +405,23 @@ Widget  build(BuildContext  context) {
 
 # Phone Login
 
-## Configuration for Phone Login
+## Configuration for Phone Login Android
 
 - Add **Firebase** to your **Flutter Application**
   [Adding Firebase](https://firebase.google.com/docs/flutter/)
 - Add provider (`Phone`) on Firebase Console
-
+## Configuration for Phone Login IOS
+```plist
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Define your schema</string>
+			</array>
+		</dict>
+	</array>
+```
 ## Usage
 
 ```dart
@@ -418,6 +430,21 @@ class  _MyWidget  extends StatelessWidget with  PhoneLogin {
 Widget  build(BuildContext  context) {
 	return Column(
               children: [
+                TextButton(
+                    onPressed: () => verifyPhoneNumber(
+                        phoneNumber: [YOUR_PHONE_NUMBER],
+                        firebaseInstance: FirebaseAuth.instance,
+                        onSuccess: (message) {
+                          snackBar(message);
+                        },
+                        onError: (error) {
+                          snackBar(error);
+                        }),
+                        codeSent: ((verificationId, resendingToken) => {},
+                    child: const Text(
+                      'Verify Phone',
+                      style: TextStyle(color: Colors.black54),
+                    )),
                 TextButton(
                     onPressed: () => signInWithPhone(
                         phoneNumber: [YOUR_PHONE_NUMBER],
@@ -429,8 +456,9 @@ Widget  build(BuildContext  context) {
                         onError: (error) {
                           snackBar(error);
                         }),
+                        verificationId: [YOUR_VERIFICATION_ID]
                     child: const Text(
-                      'Phone Login',
+                      'Signin with phone',
                       style: TextStyle(color: Colors.black54),
                     )),
                 TextButton(
@@ -453,7 +481,42 @@ Widget  build(BuildContext  context) {
   [Adding Firebase](https://firebase.google.com/docs/flutter/)
 
 ## Usage
-
+### Sign-up to Firebase Email Login
+```dart
+class  _MyWidget  extends StatelessWidget with  FirebaseEmailLogin {
+@override
+Widget  build(BuildContext  context) {
+	return Column(
+              children: [
+                TextButton(
+                  onPressed: () => signUpWithFirebaseEmail(
+                    firebaseInstance: FirebaseAuth.instance,
+                    email: [YOUR_EMAIL],
+                    password: [YOUR_PASSWORD],
+                    onSuccess: (message) {
+                      snackBar(message);
+                    },
+                    onError: (error) {
+                      snackBar(error);
+                    },
+                  ),
+                  child: const Text(
+                    'Firebase-Email Singup',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+                TextButton(
+                    onPressed: () => signOutFromFirebaseEmail(
+                        firebaseInstance: FirebaseAuth.instance),
+                    child: const Text(
+                      'Firebase-Email Logout',
+                      style: TextStyle(color: Colors.black54),
+                    )),
+              ],
+            ),
+}
+```
+### Sign-in to Firebase Email Login
 ```dart
 class  _MyWidget  extends StatelessWidget with  FirebaseEmailLogin {
 @override
@@ -488,7 +551,29 @@ Widget  build(BuildContext  context) {
             ),
 }
 ```
-
+### Reset password for Firebase Email Login
+```dart
+class  _MyWidget  extends StatelessWidget with  FirebaseEmailLogin {
+@override
+Widget  build(BuildContext  context) {
+	return TextButton(
+                  onPressed: () => resetPasswordWithFirebaseEmail(
+                    firebaseInstance: FirebaseAuth.instance,
+                    email: [YOUR_EMAIL],
+                    onSuccess: (message) {
+                      snackBar(message);
+                    },
+                    onError: (error) {
+                      snackBar(error);
+                    },
+                  ),
+                  child: const Text(
+                    'Firebase-Email Reset',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+}
+```
 # Biometric Login
 
 ## Configuration for Biometric Login for Android
@@ -526,17 +611,16 @@ class  _MyWidget  extends StatelessWidget with  FingerprintLogin {
 @override
 Widget  build(BuildContext  context) {
 	return TextButton(
-		onPressed: () => signInWithFirebaseEmail(
-                    firebaseInstance: FirebaseAuth.instance,
-                    email: [YOUR_EMAIL],
-                    password: [YOUR_PASSWORD],
-                    onSuccess: (message) {
-                      snackBar(message);
-                    },
-                    onError: (error) {
-                      snackBar(error);
-                    },)
-		child: Text('Firebase-Email Login',style: const  TextStyle(color: Colors.black54),
+		onPressed: () => signInWithBiometric(
+                  onSuccess: (message) {
+                    snackBar(message, context);
+                  },
+                  onError: (error) {
+                    snackBar(error, context);
+                  },
+                  isBiometricAvailable: (status) {}),
+            ),
+		child: Text('Biometric Login',style: const  TextStyle(color: Colors.black54),
 	);
 }
 ```

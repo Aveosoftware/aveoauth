@@ -1,9 +1,11 @@
 import 'package:aveoauth/aveoauth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:loginexample/login/login_page.dart';
 
 import 'firebase_options.dart';
+import 'login/login_social_login_button.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,12 +71,12 @@ class _MyHomePageState extends State<MyHomePage>
         title: Text(widget.title),
         centerTitle: true,
       ),
-      body: LoginPage(),
-      // body: SingleChildScrollView(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.center,
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
+      // body: LoginPage(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
       // Padding(
       //   padding: const EdgeInsets.symmetric(horizontal: 15),
       //   child: TextField(
@@ -181,19 +183,18 @@ class _MyHomePageState extends State<MyHomePage>
       //         onError: (error) {
       //           snackBar(error);
       //         })),
-      // CustomButton(
-      //     logoUrl: "https://img.icons8.com/ios-glyphs/344/mac-os.png",
-      //     text: 'Apple Login',
-      //     isLabelVisble: false,
-      //     onPressed: () => signInWithApple(
-      //         context: context,
-      //         firebaseInstance: FirebaseAuth.instance,
-      //         onSuccess: (message) {
-      //           snackBar(message);
-      //         },
-      //         onError: (error) {
-      //           snackBar(error);
-      //         })),
+      CustomButton(
+          logoUrl: "https://img.icons8.com/ios-glyphs/344/mac-os.png",
+          text: 'Apple Login',
+          onPressed: () => signInWithApple(
+              context: context,
+              firebaseInstance: FirebaseAuth.instance,
+              onSuccess: (message) {
+                snackBar(message);
+              },
+              onError: (error) {
+                snackBar(error);
+              })),
       // CustomButton(
       //   logoUrl: "https://img.icons8.com/glyph-neue/344/github.png",
       //   text: 'Github Login',
@@ -275,9 +276,9 @@ class _MyHomePageState extends State<MyHomePage>
       //           });
       //     }),
       //     LoginPage()
-      //   ],
-      // ),
-      // ),
+        ],
+      ),
+      ),
     );
   }
 }
