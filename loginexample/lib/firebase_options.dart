@@ -63,12 +63,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDyUOBrOqkPLj_1uOwujWUUu7ykUbdpWIY',
-    appId: '1:885755172961:ios:ef8f4973518f761e74f220',
+    appId: '1:885755172961:ios:8a46c63e1815af5874f220',
     messagingSenderId: '885755172961',
     projectId: 'authmelosmodule2',
     storageBucket: 'authmelosmodule2.appspot.com',
-    iosClientId: '885755172961-401b98nqf76ocqluufdmq5s0k8mtll7t.apps.googleusercontent.com',
-    iosBundleId: 'com.example.loginexample',
+    iosClientId:
+        '885755172961-401b98nqf76ocqluufdmq5s0k8mtll7t.apps.googleusercontent.com',
+    iosBundleId: 'com.aveosoftware.example',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '885755172961',
     projectId: 'authmelosmodule2',
     storageBucket: 'authmelosmodule2.appspot.com',
-    iosClientId: '885755172961-401b98nqf76ocqluufdmq5s0k8mtll7t.apps.googleusercontent.com',
+    iosClientId:
+        '885755172961-401b98nqf76ocqluufdmq5s0k8mtll7t.apps.googleusercontent.com',
     iosBundleId: 'com.example.loginexample',
   );
 }

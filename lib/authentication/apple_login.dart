@@ -37,6 +37,10 @@ mixin AppleLogin {
           AppleIDAuthorizationScopes.fullName,
         ],
         nonce: nonce,
+        webAuthenticationOptions: WebAuthenticationOptions(
+        clientId: "com.aveosoftware.exampleservice",
+        redirectUri: Uri.parse(
+            "https://authmelosmodule2.firebaseapp.com/__/auth/handler"),),
       );
 
       // Create an `OAuthCredential` from the credential returned by Apple.
