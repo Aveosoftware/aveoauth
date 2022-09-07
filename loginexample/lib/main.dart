@@ -183,18 +183,18 @@ class _MyHomePageState extends State<MyHomePage>
       //         onError: (error) {
       //           snackBar(error);
       //         })),
-      CustomButton(
-          logoUrl: "https://img.icons8.com/ios-glyphs/344/mac-os.png",
-          text: 'Apple Login',
-          onPressed: () => signInWithApple(
-              context: context,
-              firebaseInstance: FirebaseAuth.instance,
-              onSuccess: (message) {
-                snackBar(message);
-              },
-              onError: (error) {
-                snackBar(error);
-              })),
+      // CustomButton(
+      //     logoUrl: "https://img.icons8.com/ios-glyphs/344/mac-os.png",
+      //     text: 'Apple Login',
+      //     onPressed: () => signInWithApple(
+      //         context: context,
+      //         firebaseInstance: FirebaseAuth.instance,
+      //         onSuccess: (message) {
+      //           snackBar(message);
+      //         },
+      //         onError: (error) {
+      //           snackBar(error);
+      //         })),
       // CustomButton(
       //   logoUrl: "https://img.icons8.com/glyph-neue/344/github.png",
       //   text: 'Github Login',

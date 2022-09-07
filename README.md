@@ -166,18 +166,134 @@ Widget  build(BuildContext  context) {
 
 - Add **Firebase** to your **Flutter Application**
   [Adding Firebase](https://firebase.google.com/docs/flutter/)
-- While adding provider (`Github`) -> copy redirectUrl
-- Go to apple developer account -> Identifier -> Click on the add button -> Select App ID -> Continue -> App -> Continue -> Select "Sign In with Apple" -> Continue -> Register
-- Register new [OAuth](https://github.com/settings/applications/new) application adding the `redirectUrl` and Register Application
-- Copy `Client ID` and `Client Secret` into Firebase Console and Enable and Save it.
-- Add dependency in **android/app/src/build.grid**
+- While adding provider (`Apple`) -> copy redirectUrl 
+### Register an App ID
 
-```dart
-defaultConfig {
-	minSdkVersion 19
-	}
+If you don't have one yet, create a [App ID](https://developer.apple.com/account/resources/identifiers/list/bundleId) following these steps:
+
+- Click `"Register an App ID"`
+- In the wizard select `"App IDs"`, click `"Continue"`
+- Set the `Description` and `Bundle ID`, and select the `Sign In with Apple` capability
+  - Usually the default setting of `"Enable as a primary App ID"` should suffice here. If you ship multiple apps that should all share the same `Apple ID` credentials for your users, please consult the Apple documentation on how to best set these up.
+- Click `"Continue"`, and then click `"Register"` to finish the creation of the App ID
+
+In case you already have an existing `App ID` that you want to use with Sign in with Apple:
+
+- Open that `App ID` from the list
+- Check the `"Sign in with Apple"` capability
+- Click `"Save"`
+
+If you have change your app's capabilities, you need to fetch the `updated provisioning profiles` (for example via `Xcode`) to use the `new capabilities`.
+### Create a Service ID
+
+The `Service ID` is only needed for a Web or Android integration. If you only intend to integrate iOS you can skip this step.
+
+Go to your apple developer page then ["Identifiers"](https://developer.apple.com/account/resources/identifiers/list) and follow these steps:
+
+Next create a [Service ID](https://developer.apple.com/account/resources/identifiers/list/serviceId) following these steps:
+
+- Click `"Register an Services ID"`
+- Select `"Services IDs"`, click `"Continue"`
+- Set your `"Description"` and `"Identifier"`
+  - The `"Identifier"` will later be referred to as your `clientID`
+- Click `"Continue"` and then `"Register"`
+
+Now that the service is created, we have to `enable` it to be used for `Sign in with Apple`:
+
+- Select the `service` from the list of services
+- Check the box next to `"Sign in with Apple"`, then click `"Configure"`
+- In the `Domains and Subdomains` add the domains of the websites on which you want to use Sign in with Apple, e.g. `example.com`. You have to enter at least one domain here, even if you don't intend to use Sign in with Apple on any website.
+- In the `Return URLs` box add the full return URL you want to use, e.g. https://example.com/callbacks/sign_in_with_apple
+- Click `"Next"` and then `"Done"` to close the settings dialog
+- Click `"Continue"` and then `"Save"` to update the service
+
+In order to communicate with Apple's servers to verify the incoming authorization codes from your app clients, you need to create a [key](https://developer.apple.com/account/resources/authkeys/list):
+
+- Click `"Create a key"`.
+- Set the `"Key Name"` (E.g. "Sign in with Apple key").
+- Check the box next to `"Sign in with Apple"`, then click `"Configure"` on the same row.
+- Under `"Primary App ID"` select the `App ID` of the app you want to use (either the newly created one or an existing one).
+- Click `"Save"` to leave the detail view.
+- Click `"Continue"` and then click `"Register"`.
+- Now you'll see a one-time-only screen where you must download the key by clicking the `"Download"` button.
+- Also note add `"Key ID"` to configure the Firebase.
+- Add [Team ID](https://developer.apple.com/account/#/membership) to Firebase.
+- Add `Private key` to Firebase from the opening Downloaded `.p8` file.
+## Configuration for Apple Login for Android
+
+To use this plugin on Android, you will need to use the [Android V2 Embedding](https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects).  
+You can find out if you are already using the new embedding by looking into your `AndroidManifest.xml` and look for the following element:
+```xml
+<meta-data
+  android:name="flutterEmbedding"
+  android:value="2" 
+/>
 ```
 
+In case you are not yet using `Android V2 Embedding`, please first upgrade your app using the following guide: https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects
+
+- Open the `example` folder inside this package in an editor of your choice
+- Run `flutter packages get`
+- Open `lib/main.dart` and look at the `SignInWithAppleButton.onPressed` callback
+  - Set the `scopes` parameter to your required scopes, for testing we can keep requesting a name and email
+  - Update the values passed to the `WebAuthenticationOptions` constructor to match the values in the Apple Developer Portal
+  - Likewise update the `signInWithAppleEndpoint` variable to point to your
+- Once you have updated the code, `flutter run` the example on an Android device or emulator
+
+- In your `android/app/src/main/AndroidManifest.xml` inside `<application>` add
+
+```xml
+<activity
+    android:name="com.aboutyou.dart_packages.sign_in_with_apple.SignInWithAppleCallback"
+    android:exported="true"
+>
+    <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="signinwithapple" />
+        <data android:path="callback" />
+    </intent-filter>
+</activity>
+```
+
+On the Sign in with Apple callback on your sever (specified in `WebAuthenticationOptions.redirectUri`), redirect safely back to your Android app using the following URL:
+
+```
+intent://callback?${PARAMETERS FROM CALLBACK BODY}#Intent;package=YOUR.PACKAGE.IDENTIFIER;scheme=signinwithapple;end
+```
+
+The `PARAMETERS FROM CALLBACK BODY` should be filled with the urlencoded body you receive on the endpoint from Apple's server, and the `package` parameter should be changed to match your app's package identifier (as published on the Google Play Store). Leave the `callback` path and `signinwithapple` scheme untouched.
+
+Furthermore, when handling the incoming credentials on the client, make sure to only overwrite the current (guest) session of the user once your own server have validated the incoming `code` parameter, such that your app is not susceptible to malicious incoming links (e.g. logging out the current user)
+### iOS
+
+At this point you should have added the Sign in with Apple capability to either your own app's capabilities or the test application you created to run the example.
+
+In case you don't have `Automatically manage Signing` turned on in Xcode, you will need to recreate and download the updated Provisioning Profiles for your app, so they include the new `Sign in with Apple` capability. Then you can download the new certificates and select them in Xcode.
+
+In case XCode manages your signing, this step will be done automatically for you. Just make sure the `Sign in with Apple` capability is actived as described in the example below.
+
+Additionally this assumes that you have at least one iOS device registered in your developer account for local testing, so you can run the example on a device.
+
+#### Example
+
+- Open the `example` folder in a terminal and run `flutter packages get`
+- Open `example/ios/Runner.xcworkspace` in Xcode
+- Under `Runner` (file browser side bar) -> `Targets` -> `Runner` -> `Signing & Capabilities` set the "Bundle Identifier" ("App ID") you have created in the Apple Developer Portal earlier
+  - Ensure that "Sign in with Apple" is listed under the capabilities (if not, add it via the `+`)
+- Now open a terminal in the `example` folder and execute the follow commands
+  - `cd ios`
+  - `bundle install`, to install the Ruby dependencies used for Cocoapods
+  - `bundle exec pod install`, to install the Cocoapods for the iOS project
+- In the terminal navigate back to the root of the `example` folder and `flutter run` on your test device
+
+#### Your App
+
+- First and foremost make sure that your app has the "Sign in with Apple" capability (`Runner` (file browser side bar) -> `Targets` -> `Runner` -> `Signing & Capabilities`), as otherwise Sign in with Apple will fail without visual indication (the code will still receive exceptions)
+- Either integrate the example server as shown above, or build your own backend
+  - Ensure that the `clientID` used when validating the received `code` parameter with Apple's server is dependent on the client: Use the App ID (also called "Bundle ID" in some places) when using codes from apps running on Apple platforms, and use the service ID when using a code retrieved from a web authentication flow
 ## Usage
 
 ```dart

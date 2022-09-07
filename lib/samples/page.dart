@@ -46,7 +46,7 @@ import 'package:aveoauth/aveoauth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_social_login_button.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_snackbar.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_otp_page.dart';
+${isPhoneLogin ? '''import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_otp_page.dart';''':''}
 ''';
 
   @override

@@ -21,6 +21,8 @@ mixin AppleLogin {
   signInWithApple(
       {required FirebaseAuth firebaseInstance,
       required BuildContext context,
+      required String clientId,
+      required String redirectUri,
       required SussessCallback onSuccess,
       required ErrorCallback onError}) async {
     // To prevent replay attacks with the credential returned from Apple, we
@@ -38,11 +40,12 @@ mixin AppleLogin {
         ],
         nonce: nonce,
         webAuthenticationOptions: WebAuthenticationOptions(
-        clientId: "com.aveosoftware.exampleservice",
-        redirectUri: Uri.parse(
-            "https://authmelosmodule2.firebaseapp.com/__/auth/handler"),),
+          clientId: "com.aveosoftware.applelogintestservice",
+          redirectUri:
+              Uri.parse("https://auth4-e6e7d.firebaseapp.com/__/auth/handler"),
+        ), 
       );
-
+      print("Identifier Token${appleCredential.identityToken}");
       // Create an `OAuthCredential` from the credential returned by Apple.
       final credential = OAuthProvider("apple.com").credential(
         idToken: appleCredential.identityToken,

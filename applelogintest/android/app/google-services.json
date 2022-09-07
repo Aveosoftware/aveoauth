@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "426704782047",
+    "project_id": "auth4-e6e7d",
+    "storage_bucket": "auth4-e6e7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426704782047:android:26286f08928a9562bfdf6a",
+        "android_client_info": {
+          "package_name": "com.aveosoftware.applelogintest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426704782047-uo7trtig2srf312ujutg30gbf8dqc6u8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKIYP4Hm1rBV4XaYFbvFG0TDLQTo4Jl_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426704782047-uo7trtig2srf312ujutg30gbf8dqc6u8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "426704782047-prb8rdotmfblgm9t83fao7rni981alsj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aveosoftware.applelogintest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
