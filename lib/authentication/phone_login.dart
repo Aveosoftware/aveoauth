@@ -10,9 +10,9 @@ mixin PhoneLogin {
       required SussessCallback onSuccess,
       required ErrorCallback onError,
       required String phoneNumber,
-      required PhoneCodeSent codeSent}) {
+      required PhoneCodeSent codeSent}) async {
     try {
-      firebaseInstance.verifyPhoneNumber(
+      await firebaseInstance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential userCredential) async {
           await firebaseInstance
@@ -47,7 +47,7 @@ mixin PhoneLogin {
         verificationId: verificationId, smsCode: smsCode);
     // Trigger the authentication flow
     try {
-      firebaseInstance.signInWithCredential(credential).then((value) => {
+      await firebaseInstance.signInWithCredential(credential).then((value) => {
             onSuccess('$phoneNumber Logged in successfully'),
             Mode().changeLoginMode = LoginMode.phone,
           });
