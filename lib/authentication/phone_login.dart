@@ -31,6 +31,7 @@ mixin PhoneLogin {
         },
       );
     } catch (error) {
+      onError(e.toString());
       debugPrint(error.toString());
     }
   }
