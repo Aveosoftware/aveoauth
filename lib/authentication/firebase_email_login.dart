@@ -16,9 +16,9 @@ mixin FirebaseEmailLogin {
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
-      debugPrint(errorMessage);
+      (errorMessage);
     } catch (e) {
-      debugPrint(e.toString());
+      (e.toString());
     }
   }
 
@@ -37,9 +37,8 @@ mixin FirebaseEmailLogin {
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
-      debugPrint(errorMessage);
     } catch (e) {
-      debugPrint(e.toString());
+      logger.e("Email Error",e.toString());
     }
   }
 
@@ -56,7 +55,7 @@ mixin FirebaseEmailLogin {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
     } catch (e) {
-      debugPrint(e.toString());
+      logger.e("Email Error",e.toString());
     }
   }
 

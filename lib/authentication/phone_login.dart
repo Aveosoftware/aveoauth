@@ -22,7 +22,7 @@ mixin PhoneLogin {
         verificationFailed: (FirebaseAuthException e) {
           onError(e.message ?? 'Phone number verification failed');
           if (e.code == 'invalid-phone-number') {
-            debugPrint('The provided phone number is not valid.');
+            logger.e("Phone Login Error",'The provided phone number is not valid.');
           }
         },
         codeSent: codeSent,
@@ -32,7 +32,7 @@ mixin PhoneLogin {
       );
     } catch (error) {
       onError(e.toString());
-      debugPrint(error.toString());
+      logger.e("Phone Login Error",error.toString());
     }
   }
 
@@ -53,7 +53,7 @@ mixin PhoneLogin {
           });
     } catch (e) {
       onError(e.toString());
-      debugPrint(e.toString());
+      logger.e("Phone Login Error",e.toString());
     }
   }
 

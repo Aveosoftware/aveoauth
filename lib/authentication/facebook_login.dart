@@ -19,13 +19,12 @@ mixin FacebookLogin {
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMessage);
-        debugPrint(errorMessage);
       } catch (e) {
-        debugPrint(e.toString());
+        logger.e("Facebook Error",e.toString());
       }
     } else {
-      debugPrint(loginResult.status.toString());
-      debugPrint(loginResult.message);
+      logger.e("Facebook Login Status",loginResult.status.toString());
+      logger.e("Facebook Login Message",loginResult.message);
     }
   }
 

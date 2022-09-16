@@ -27,7 +27,7 @@ mixin GoogleLogin {
         onError(errorMeessage);
       }
     } catch (error) {
-      debugPrint(error.toString());
+      logger.e("Google Error",error.toString());
     }
   }
 

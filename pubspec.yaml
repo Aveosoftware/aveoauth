@@ -26,6 +26,7 @@ dependencies:
   pubspec: ^2.3.0
   version: ^3.0.2
   dart_style: ^2.2.3
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

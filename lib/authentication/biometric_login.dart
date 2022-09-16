@@ -1,16 +1,16 @@
 part of '../aveoauth.dart';
 
 mixin BiometricLogin {
-  static final _auth = LocalAuthentication();
+  static final LocalAuthentication _auth = LocalAuthentication();
 
   static Future<bool> hasBiometrics() async {
     try {
       return await _auth.canCheckBiometrics;
     } on PlatformException catch (e) {
-      debugPrint(e.toString());
+      logger.e("Biometric Platform Exception", e.toString());
       return false;
     } catch (e) {
-      debugPrint(e.toString());
+      logger.e("Biometric Error", e.toString());
       return false;
     }
   }
@@ -19,14 +19,14 @@ mixin BiometricLogin {
     try {
       List<BiometricType> temp = await _auth.getAvailableBiometrics();
       for (int i = 0; i < temp.length; i++) {
-        debugPrint('>>>>>>>>>>>>>>>>>>>>>>>>${temp[i]}');
+        logger.i('Available Biometrics: ${temp[i]}');
       }
       return await _auth.getAvailableBiometrics();
     } on PlatformException catch (e) {
-      debugPrint(e.toString());
+      logger.e("Biometric Platform Exception", e.toString());
       return <BiometricType>[];
     } catch (e) {
-      debugPrint(e.toString());
+      logger.e("Biometric Error", e.toString());
       return <BiometricType>[];
     }
   }
@@ -55,9 +55,9 @@ mixin BiometricLogin {
       onSuccess('Logged in successfully');
     } on PlatformException catch (e) {
       onError(e.message ?? 'Error while logging in');
-      debugPrint(e.toString());
+      logger.e("Biometric Platform Exception", e.toString());
     } catch (e) {
-      debugPrint(e.toString());
+      logger.e("Biometric Error", e.toString());
     }
   }
 }

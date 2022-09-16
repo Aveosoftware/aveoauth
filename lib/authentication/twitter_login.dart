@@ -20,13 +20,12 @@ mixin TwitterSocialLogin {
 
       // Trigger the sign-in flow
       final result = await twitterLogin.loginV2();
-
       // Create a credential from the access token
       final twitterAuthCredential = TwitterAuthProvider.credential(
         accessToken: result.authToken!,
         secret: result.authTokenSecret!,
       );
-      debugPrint(result.authToken);
+      
       try {
         UserCredential userCredential =
             await firebaseInstance.signInWithCredential(twitterAuthCredential);
@@ -34,12 +33,11 @@ mixin TwitterSocialLogin {
         onSuccess(
             '${userCredential.user?.displayName ?? ''} Logged in successfully');
       } on FirebaseAuthException catch (e) {
-        debugPrint(e.message);
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMessage);
       }
     } catch (error) {
-      debugPrint(error.toString());
+      logger.e("Twitter Error", error.toString());
     }
   }
 

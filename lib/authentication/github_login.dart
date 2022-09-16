@@ -33,7 +33,7 @@ mixin GithubLogin {
         onError(errorMessage);
       }
     } catch (error) {
-      debugPrint(error.toString());
+      logger.e("Github Error",error.toString());
     }
   }
 
