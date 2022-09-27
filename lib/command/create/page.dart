@@ -57,7 +57,7 @@ class CreatePageCommand extends Command {
     }
 
     String isFirebaseEmailLogin =
-        ask('Firebase Email Login (Y/N)', defaultValue: 'N', required: true);
+        ask('Firebase Email Login (Y/N)', defaultValue: 'Y', required: true);
     if (isFirebaseEmailLogin.toUpperCase() == 'Y') {
       echo('Firebase Email Login is enabled\n\n');
     } else if (isFirebaseEmailLogin.toUpperCase() == 'N') {
