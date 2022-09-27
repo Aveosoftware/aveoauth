@@ -1,4 +1,5 @@
 import 'package:example/log/log_page.dart';
+import 'package:example/login3/login3_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: LogPage(),
+      home: Login3Page(),
       // home: const MyHomePage(
       //   title: 'Authentication Example',
       // ),

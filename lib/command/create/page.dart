@@ -7,9 +7,10 @@ import 'package:aveoauth/samples/otp_page.dart';
 import 'package:aveoauth/samples/page.dart';
 import 'package:aveoauth/samples/widget/snackbar.dart';
 import 'package:aveoauth/samples/widget/social_login_button.dart';
+import 'package:aveoauth/samples/widget/text_field.dart';
+import 'package:aveoauth/samples/widget/verify_phone.dart';
 import 'package:dcli/dcli.dart';
 import 'package:recase/recase.dart';
-// import '../../extensions/string.dart';
 
 class CreatePageCommand extends Command {
   @override
@@ -64,15 +65,17 @@ class CreatePageCommand extends Command {
     } else {
       echo('Invalid entry\n\n');
     }
-     String githubClientId ='';
-      String githubClientSecret ='';
-      String githubRedirectUrl ='';
+    String githubClientId = '';
+    String githubClientSecret = '';
+    String githubRedirectUrl = '';
     String isGithubLogin =
         ask('Github Login (Y/N)', defaultValue: 'N', required: true);
     if (isGithubLogin.toUpperCase() == 'Y') {
-      githubClientId = ask('Enter clientId',defaultValue: '', required: true);
-      githubClientSecret = ask('Enter clientSecret',defaultValue: '', required: true);
-      githubRedirectUrl = ask('Enter redirectUrl',defaultValue: '', required: true);
+      githubClientId = ask('Enter clientId', defaultValue: '', required: true);
+      githubClientSecret =
+          ask('Enter clientSecret', defaultValue: '', required: true);
+      githubRedirectUrl =
+          ask('Enter redirectUrl', defaultValue: '', required: true);
       echo('Github Login is enabled\n\n');
     } else if (isGithubLogin.toUpperCase() == 'N') {
       echo('Github Login is disabled\n\n');
@@ -99,15 +102,17 @@ class CreatePageCommand extends Command {
     } else {
       echo('Invalid entry\n\n');
     }
-    String twitterApiKey ='';
-      String twitterApiSecretKey ='';
-      String twitterRedirectURI='';
+    String twitterApiKey = '';
+    String twitterApiSecretKey = '';
+    String twitterRedirectURI = '';
     String isTwitterLogin =
         ask('Twitter Login (Y/N)', defaultValue: 'N', required: true);
     if (isTwitterLogin.toUpperCase() == 'Y') {
-      twitterApiKey = ask('Enter apiKey',defaultValue: '', required: true);
-      twitterApiSecretKey = ask('Enter apiSecretKey',defaultValue: '', required: true);
-      twitterRedirectURI = ask('Enter redirectURI',defaultValue: '', required: true);
+      twitterApiKey = ask('Enter apiKey', defaultValue: '', required: true);
+      twitterApiSecretKey =
+          ask('Enter apiSecretKey', defaultValue: '', required: true);
+      twitterRedirectURI =
+          ask('Enter redirectURI', defaultValue: '', required: true);
       echo('Twitter Login is enabled\n\n');
     } else if (isTwitterLogin.toUpperCase() == 'N') {
       echo('Twitter Login is disabled\n\n');
@@ -115,8 +120,11 @@ class CreatePageCommand extends Command {
       echo('Invalid entry\n\n');
     }
 
-    String isSocialLoginButtonLableEnabled = ask('Label enables Social Login Buttons (Y/N)', defaultValue: 'N', required: true);
-        if (isSocialLoginButtonLableEnabled.toUpperCase() == 'Y') {
+    String isSocialLoginButtonLableEnabled = ask(
+        'Label enables Social Login Buttons (Y/N)',
+        defaultValue: 'N',
+        required: true);
+    if (isSocialLoginButtonLableEnabled.toUpperCase() == 'Y') {
       echo('Social Login Buttons label enabled\n\n');
     } else if (isSocialLoginButtonLableEnabled.toUpperCase() == 'N') {
       echo('Social Login Buttons label disabled\n\n');
@@ -132,6 +140,10 @@ class CreatePageCommand extends Command {
     Directory(path).createSync(recursive: true);
     final socialLoginButtonDir = Structure.paths['social_login_button']!;
     Directory(socialLoginButtonDir).createSync(recursive: true);
+    final textFieldDir = Structure.paths['text_field']!;
+    Directory(textFieldDir).createSync(recursive: true);
+    final verifyPhoneDir = Structure.paths['verify_phone']!;
+    Directory(verifyPhoneDir).createSync(recursive: true);
     final otpPageDir = Structure.paths['otp_page']!;
     Directory(otpPageDir).createSync(recursive: true);
     final snackbarDir = Structure.paths['snackbar']!;
@@ -160,7 +172,8 @@ class CreatePageCommand extends Command {
         twitterApiKey: twitterApiKey,
         twitterApiSecretKey: twitterApiSecretKey,
         twitterRedirectURI: twitterRedirectURI,
-        isSocialLoginButtonLableEnabled: stringToBool(isSocialLoginButtonLableEnabled),
+        isSocialLoginButtonLableEnabled:
+            stringToBool(isSocialLoginButtonLableEnabled),
       ),
       null,
     );
@@ -187,18 +200,41 @@ class CreatePageCommand extends Command {
       null,
     );
 
-    if(stringToBool(isPhoneLogin)){
-          handleFileCreate(
+    handleFileCreate(
       name,
-      'otp_page',
-      otpPageDir,
+      'text_field',
+      textFieldDir,
       extraFolder,
-      CustomOtpPageSample(
+      CustomTextField(
         '',
-        name,
       ),
       null,
     );
+
+    if (stringToBool(isPhoneLogin)) {
+      handleFileCreate(
+        name,
+        'verify_phone',
+        verifyPhoneDir,
+        extraFolder,
+        VerifyPhone(
+          '',
+          name,
+        ),
+        null,
+      );
+
+      handleFileCreate(
+        name,
+        'otp_page',
+        otpPageDir,
+        extraFolder,
+        CustomOtpPageSample(
+          '',
+          name,
+        ),
+        null,
+      );
     }
 
     echo('${name.pascalCase} page created successfully\n\n');

@@ -1,68 +1,29 @@
-import 'package:aveoauth/common/pubspec/pubspec_utils.dart';
-import 'package:aveoauth/samples/sample.dart';
-import 'package:recase/recase.dart';
-
-class PageSample extends Sample {
-  final String _viewName;
-  final bool isAppleLogin;
-  final bool isGoogleLogin;
-  final bool isFacebookLogin;
-  final bool isFirebaseEmailLogin;
-  final bool isGithubLogin;
-  final bool isBiometricLogin;
-  final bool isPhoneLogin;
-  final bool isTwitterLogin;
-  final String githubClientId;
-  final String githubClientSecret;
-  final String githubRedirectUrl;
-  final String twitterApiKey;
-  final String twitterApiSecretKey;
-  final String twitterRedirectURI;
-  final bool isSocialLoginButtonLableEnabled;
-
-  PageSample(
-    String path,
-    this._viewName, {
-    required this.githubClientId,
-    required this.githubClientSecret,
-    required this.githubRedirectUrl,
-    required this.twitterApiKey,
-    required this.twitterApiSecretKey,
-    required this.twitterRedirectURI,
-    required this.isAppleLogin,
-    required this.isGoogleLogin,
-    required this.isFacebookLogin,
-    required this.isFirebaseEmailLogin,
-    required this.isGithubLogin,
-    required this.isBiometricLogin,
-    required this.isPhoneLogin,
-    required this.isTwitterLogin,
-    required this.isSocialLoginButtonLableEnabled,
-  }) : super(path);
-
-  String get import => '''
 import 'package:flutter/material.dart';
+
 import 'package:aveoauth/aveoauth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_social_login_button.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_snackbar.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_text_field.dart';
-${isPhoneLogin ? '''import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_verify_phone.dart';''' : ''}
-''';
+
+import 'login3_snackbar.dart';
+import 'login3_social_login_button.dart';
+import 'login3_text_field.dart';
+import 'login3_verify_phone.dart';
+
+class Login3Page extends StatefulWidget {
+  Login3Page({Key? key}) : super(key: key);
 
   @override
-  String get content => '''$import
-
-class ${_viewName.pascalCase}Page extends StatefulWidget {
-  ${_viewName.pascalCase}Page({Key? key}) : super(key: key);
-
-  @override
-  State<${_viewName.pascalCase}Page> createState() => _${_viewName.pascalCase}PageState();
+  State<Login3Page> createState() => _Login3PageState();
 }
 
-class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Page> with ${isAppleLogin ? ' AppleLogin,' : ''} ${isGoogleLogin ? ' GoogleLogin,' : ''} ${isFacebookLogin ? ' FacebookLogin,' : ''} ${isFirebaseEmailLogin ? ' FirebaseEmailLogin,' : ''} ${isGithubLogin ? ' GithubLogin,' : ''} ${isBiometricLogin ? ' BiometricLogin,' : ''} ${isPhoneLogin ? ' PhoneLogin,' : ''} ${isTwitterLogin ? ' TwitterSocialLogin,' : ''} CurrentLoginMode{
-  ${isFirebaseEmailLogin ? '''TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController(); 
+class _Login3PageState extends State<Login3Page>
+    with
+        GoogleLogin,
+        FacebookLogin,
+        FirebaseEmailLogin,
+        PhoneLogin,
+        CurrentLoginMode {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   FocusNode emailFocusNode = FocusNode();
   FocusNode passwordFocusNode = FocusNode();
@@ -70,12 +31,12 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
 
   bool isSignUpMode = false;
   bool isForgetPasswordMode = false;
-  ''' : ''}
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  
+
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: SizedBox(
@@ -86,7 +47,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  ${isFirebaseEmailLogin ? '''Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
@@ -103,21 +64,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                       if (!isForgetPasswordMode)
                         Row(
                           children: [
-                            ${isBiometricLogin ? '''CustomButton(
-                              logoUrl:
-                                  "https://img.icons8.com/external-modern-lines-kalash/344/external-fingerprint-smart-technologies-modern-lines-kalash.png",
-                              text: 'Biometric Login',
-                              isLabelVisible: false,
-                              onPressed: () => signInWithBiometric(
-                                  onSuccess: (message) {
-                                    snackBar(message, context);
-                                  },
-                                  onError: (error) {
-                                    snackBar(error, context);
-                                  },
-                                  isBiometricAvailable: (status) {}),
-                            ),''' : ''}
-                            ${isPhoneLogin ? '''CustomButton(
+                            CustomButton(
                                 logoUrl:
                                     "https://img.icons8.com/fluency-systems-filled/48/000000/phone.png",
                                 text: 'Phone Login',
@@ -126,7 +73,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
                                           const VerifyPhone()));
-                                }),''' : ''}
+                                }),
                           ],
                         ),
                     ],
@@ -334,12 +281,12 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                     ),
                   if (!isForgetPasswordMode) const Text('Or'),
                   if (!isForgetPasswordMode)
-                    ${isSocialLoginButtonLableEnabled ? 'Column' : 'Row'}(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: ${isSocialLoginButtonLableEnabled ? 'MainAxisAlignment.center' : 'MainAxisAlignment.spaceAround'},
-                      children: <Widget>[
-                          ${isGoogleLogin ? '''CustomButton(
-                            isLabelVisible: $isSocialLoginButtonLableEnabled,
+                    Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          CustomButton(
+                            isLabelVisible: false,
                             logoUrl:
                                 "https://img.icons8.com/fluency/344/google-plus-squared.png",
                             text: 'Google Login',
@@ -351,9 +298,9 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 onError: (error) {
                                   snackBar(error, context);
                                 }),
-                          ),''' : ''}
-                          ${isFacebookLogin ? '''CustomButton(
-                              isLabelVisible: $isSocialLoginButtonLableEnabled,
+                          ),
+                          CustomButton(
+                              isLabelVisible: false,
                               logoUrl:
                                   "https://www.facebook.com/images/fb_icon_325x325.png",
                               text: 'Facebook Login',
@@ -364,53 +311,8 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   },
                                   onError: (error) {
                                     snackBar(error, context);
-                                  })),''' : ''}
-                          ${isAppleLogin ? '''CustomButton(
-                              isLabelVisible: $isSocialLoginButtonLableEnabled,
-                              logoUrl:
-                                  "https://img.icons8.com/ios-glyphs/344/mac-os.png",
-                              text: 'Apple Login',
-                              onPressed: () {}),''' : ''}
-                          ${isGithubLogin ? '''CustomButton(
-                            isLabelVisible: $isSocialLoginButtonLableEnabled,
-                            logoUrl:
-                                "https://img.icons8.com/glyph-neue/344/github.png",
-                            text: 'Github Login',
-                            onPressed: () => signInWithGithub(
-                                context: context,
-                                clientId: '4d6a7b20b5bf1132062f',
-                                clientSecret:
-                                    '2b3d55678794b2301696aa391ff93dd856a0ed7e',
-                                redirectUrl:
-                                    'https://authmelosmodule.firebaseapp.com/__/auth/handler',
-                                firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
-                                  snackBar(message, context);
-                                },
-                                onError: (error) {
-                                  snackBar(error, context);
-                                }),
-                          ),''' : ''}
-                          ${isTwitterLogin ? '''CustomButton(
-                            isLabelVisible: $isSocialLoginButtonLableEnabled,
-                            logoUrl:
-                                "https://img.icons8.com/color/344/twitter--v1.png",
-                            text: 'Twitter Login',
-                            onPressed: () => signInWithTwitter(
-                                context: context,
-                                apiKey: '1US6bc6IKBeATjaumK9CBdpbJ',
-                                apiSecretKey:
-                                    'IEsxMVndnZKtYAT8Us1xs59WcfX2IayQr3IIFYXDXbzS4rMrE6',
-                                redirectURI: 'example://',
-                                firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
-                                  snackBar(message, context);
-                                },
-                                onError: (error) {
-                                  snackBar(error, context);
-                                }),
-                          ),''' : ''}
-                        ]),''' : ''}
+                                  })),
+                        ]),
                 ],
               ),
             ),
@@ -418,7 +320,5 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
         ),
       ),
     );
-    }
-}
-''';
+  }
 }

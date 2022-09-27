@@ -1,8 +1,10 @@
-import 'package:aveoauth/aveoauth.dart';
-import 'package:example/log/log_snackbar.dart';
-import 'package:example/log/log_social_login_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:aveoauth/aveoauth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'login3_snackbar.dart';
+import 'login3_social_login_button.dart';
 
 class OtpLoginPage extends StatefulWidget {
   final String phoneNumber;
@@ -81,8 +83,8 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
                     },
                     child: Text(
                       'Clear',
-                      style:
-                          TextStyle(color: Theme.of(context).colorScheme.primary),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ],
@@ -118,7 +120,8 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
                 },
                 child: Text(
                   'Resend OTP',
-                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
               ),
               CustomButton(

@@ -67,7 +67,7 @@ File writeFile(String path, String content,
 /// Replace the file name separator
 String replacePathTypeSeparator(String path, String separator) {
   if (separator.isNotEmpty) {
-    var index = path.indexOf(RegExp(r'social_login_button.dart|login_page.dart|login_otp.dart|login_snackbar.dart'));
+    var index = path.indexOf(RegExp(r'social_login_button.dart|login_page.dart|login_otp.dart|login_snackbar.dart|verify_phone.dart|text_field.dart|'));
     if (index != -1) {
       var chars = path.split('');
       index--;
