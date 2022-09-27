@@ -138,15 +138,15 @@ class CreatePageCommand extends Command {
     var path = pathSplit.join('/');
     path = Structure.replaceAsExpected(path: path);
     Directory(path).createSync(recursive: true);
-    final socialLoginButtonDir = Structure.paths['social_login_button']!;
+    final socialLoginButtonDir = path;
     Directory(socialLoginButtonDir).createSync(recursive: true);
-    final textFieldDir = Structure.paths['text_field']!;
+    final textFieldDir = path;
     Directory(textFieldDir).createSync(recursive: true);
-    final verifyPhoneDir = Structure.paths['verify_phone']!;
+    final verifyPhoneDir = path;
     Directory(verifyPhoneDir).createSync(recursive: true);
-    final otpPageDir = Structure.paths['otp_page']!;
+    final otpPageDir = path;
     Directory(otpPageDir).createSync(recursive: true);
-    final snackbarDir = Structure.paths['snackbar']!;
+    final snackbarDir = path;
     Directory(snackbarDir).createSync(recursive: true);
     var extraFolder = true;
 
