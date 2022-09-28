@@ -12,7 +12,7 @@ class LogoutHelper
         FirebaseEmailLogin {
   Future<void> logout(
       {required FirebaseAuth firebaseInstance,
-      required SussessCallback onSuccess,
+      required GeneralSussessCallback onSuccess,
       required ErrorCallback onError}) async {
     try {
       switch (Mode().showAppLoginMode) {

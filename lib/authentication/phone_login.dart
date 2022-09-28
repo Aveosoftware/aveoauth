@@ -7,7 +7,7 @@ typedef PhoneCodeSent = void Function(
 mixin PhoneLogin {
   verifyPhoneNumber(
       {required FirebaseAuth firebaseInstance,
-      required SussessCallback onSuccess,
+      required PhoneSussessCallback onSuccess,
       required ErrorCallback onError,
       required String phoneNumber,
       required PhoneCodeSent codeSent}) async {
@@ -17,7 +17,7 @@ mixin PhoneLogin {
         verificationCompleted: (PhoneAuthCredential userCredential) async {
           await firebaseInstance
               .signInWithCredential(userCredential)
-              .then((value) => {onSuccess('Opt sent successfully')});
+              .then((value) => {onSuccess('Opt sent successfully',userCredential)});
         },
         verificationFailed: (FirebaseAuthException e) {
           onError(e.message ?? 'Phone number verification failed');
@@ -38,7 +38,7 @@ mixin PhoneLogin {
 
   signInWithPhone(
       {required FirebaseAuth firebaseInstance,
-      required SussessCallback onSuccess,
+      required PhoneSussessCallback onSuccess,
       required ErrorCallback onError,
       required String smsCode,
       required String phoneNumber,
@@ -48,7 +48,7 @@ mixin PhoneLogin {
     // Trigger the authentication flow
     try {
       await firebaseInstance.signInWithCredential(credential).then((value) => {
-            onSuccess('$phoneNumber Logged in successfully'),
+            onSuccess('$phoneNumber Logged in successfully',credential),
             Mode().changeLoginMode = LoginMode.phone,
           });
     } catch (e) {

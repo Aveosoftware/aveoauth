@@ -31,7 +31,7 @@ mixin TwitterSocialLogin {
             await firebaseInstance.signInWithCredential(twitterAuthCredential);
         Mode().changeLoginMode = LoginMode.twitter;
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully');
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMessage);

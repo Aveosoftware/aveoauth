@@ -61,7 +61,7 @@ mixin AppleLogin {
         logger.i("Apple Firebase User Credential: $userCredential");
         Mode().changeLoginMode = LoginMode.apple;
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully');
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMessage);

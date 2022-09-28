@@ -32,7 +32,7 @@ mixin BiometricLogin {
   }
 
   signInWithBiometric(
-      {required SussessCallback onSuccess,
+      {required GeneralSussessCallback onSuccess,
       required ErrorCallback onError,
       required AuthCallback isBiometricAvailable}) async {
     final isAvailable = await hasBiometrics();

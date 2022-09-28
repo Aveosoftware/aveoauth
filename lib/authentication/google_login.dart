@@ -21,7 +21,7 @@ mixin GoogleLogin {
             await firebaseInstance.signInWithCredential(credential);
         Mode().changeLoginMode = LoginMode.google;
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully');
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMeessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMeessage);

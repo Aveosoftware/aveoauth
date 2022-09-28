@@ -12,7 +12,7 @@ mixin FirebaseEmailLogin {
           .signInWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
       onSuccess(
-          '${userCredential.user?.displayName ?? ''} Logged in successfully');
+          '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
@@ -33,7 +33,7 @@ mixin FirebaseEmailLogin {
           .createUserWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
       onSuccess(
-          '${userCredential.user?.displayName ?? ''} SignUp in successfully');
+          '${userCredential.user?.displayName ?? ''} SignUp in successfully',userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
@@ -44,7 +44,7 @@ mixin FirebaseEmailLogin {
 
   resetPasswordWithFirebaseEmail({
     required FirebaseAuth firebaseInstance,
-    required SussessCallback onSuccess,
+    required GeneralSussessCallback onSuccess,
     required ErrorCallback onError,
     required String email,
   }) async {

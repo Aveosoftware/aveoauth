@@ -27,7 +27,7 @@ mixin GithubLogin {
             await firebaseInstance.signInWithCredential(githubAuthCredential);
         Mode().changeLoginMode = LoginMode.github;
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully');
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMessage);

@@ -15,7 +15,7 @@ mixin FacebookLogin {
             await firebaseInstance.signInWithCredential(facebookAuthCredential);
         Mode().changeLoginMode = LoginMode.facebook;
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully');
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMessage);
