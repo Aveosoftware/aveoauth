@@ -120,7 +120,7 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
                   verifyPhoneNumber(
                       phoneNumber: widget.phoneNumber,
                       firebaseInstance: FirebaseAuth.instance,
-                      onSuccess: (message) {
+                      onSuccess: (message,cred) {
                         snackBar(message, context);
                       },
                       onError: (error) {
@@ -150,7 +150,7 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
                     phoneNumber: widget.phoneNumber,
                     smsCode: otpCodeController.text,
                     firebaseInstance: FirebaseAuth.instance,
-                    onSuccess: (message) {
+                    onSuccess: (message,cred) {
                       snackBar(message, context);
                     },
                     onError: (error) {

@@ -257,7 +257,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   {
                                     signUpWithFirebaseEmail(
                                         firebaseInstance: FirebaseAuth.instance,
-                                        onSuccess: (message) {
+                                        onSuccess: (message,cred) {
                                           snackBar(message, context);
                                         },
                                         onError: (error) {
@@ -272,7 +272,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   {
                                     signInWithFirebaseEmail(
                                         firebaseInstance: FirebaseAuth.instance,
-                                        onSuccess: (message) {
+                                        onSuccess: (message, cred) {
                                           snackBar(message, context);
                                         },
                                         onError: (error) {
@@ -335,17 +335,18 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                   if (!isForgetPasswordMode) const Text('Or'),
                   if (!isForgetPasswordMode)
                     ${isSocialLoginButtonLableEnabled ? 'Column' : 'Row'}(
+                      mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: ${isSocialLoginButtonLableEnabled ? 'MainAxisAlignment.center' : 'MainAxisAlignment.spaceAround'},
                       children: <Widget>[
                           ${isGoogleLogin ? '''CustomButton(
                             isLabelVisible: $isSocialLoginButtonLableEnabled,
                             logoUrl:
-                                "https://img.icons8.com/fluency/344/google-plus-squared.png",
+                                "https://img.icons8.com/color/96/000000/google-logo.png",
                             text: 'Google Login',
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message, cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -359,7 +360,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                               text: 'Facebook Login',
                               onPressed: () => signInWithFacebook(
                                   firebaseInstance: FirebaseAuth.instance,
-                                  onSuccess: (message) {
+                                  onSuccess: (message ,cred) {
                                     snackBar(message, context);
                                   },
                                   onError: (error) {
@@ -384,7 +385,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 redirectUrl:
                                     'https://authmelosmodule.firebaseapp.com/__/auth/handler',
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message,cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -403,7 +404,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                     'IEsxMVndnZKtYAT8Us1xs59WcfX2IayQr3IIFYXDXbzS4rMrE6',
                                 redirectURI: 'example://',
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message,cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {

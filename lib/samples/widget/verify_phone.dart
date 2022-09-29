@@ -100,7 +100,7 @@ class _VerifyPhoneState extends State<VerifyPhone>
                                 verifyPhoneNumber(
                                     phoneNumber: phoneNumberController.text,
                                     firebaseInstance: FirebaseAuth.instance,
-                                    onSuccess: (message) {
+                                    onSuccess: (message, cred) {
                                       snackBar(message, context);
                                     },
                                     onError: (error) {
