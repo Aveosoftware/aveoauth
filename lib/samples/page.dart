@@ -18,11 +18,15 @@ class PageSample extends Sample {
   final String twitterApiKey;
   final String twitterApiSecretKey;
   final String twitterRedirectURI;
+  final String appleClientId;
+  final String appleRedirectUri;
   final bool isSocialLoginButtonLableEnabled;
 
   PageSample(
     String path,
     this._viewName, {
+    required this.appleClientId,
+    required this.appleRedirectUri,
     required this.githubClientId,
     required this.githubClientSecret,
     required this.githubRedirectUrl,
@@ -367,11 +371,21 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                     snackBar(error, context);
                                   })),''' : ''}
                           ${isAppleLogin ? '''CustomButton(
-                              isLabelVisible: $isSocialLoginButtonLableEnabled,
-                              logoUrl:
-                                  "https://img.icons8.com/ios-glyphs/344/mac-os.png",
-                              text: 'Apple Login',
-                              onPressed: () {}),''' : ''}
+                            isLabelVisible: $isSocialLoginButtonLableEnabled,
+                            logoUrl:
+                                ""https://img.icons8.com/ios-glyphs/344/mac-os.png"",
+                            text: 'Apple Login',
+                            onPressed: () => signInWithGoogle(
+                                firebaseInstance: FirebaseAuth.instance,
+                                clientId:$appleClientId,
+                                redirectUri:$appleRedirectUri,
+                                onSuccess: (message, cred) {
+                                  snackBar(message, context);
+                                },
+                                onError: (error) {
+                                  snackBar(error, context);
+                                }),
+                          ),''' : ''}
                           ${isGithubLogin ? '''CustomButton(
                             isLabelVisible: $isSocialLoginButtonLableEnabled,
                             logoUrl:
@@ -379,11 +393,11 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             text: 'Github Login',
                             onPressed: () => signInWithGithub(
                                 context: context,
-                                clientId: '4d6a7b20b5bf1132062f',
+                                clientId: $githubClientId,
                                 clientSecret:
-                                    '2b3d55678794b2301696aa391ff93dd856a0ed7e',
+                                    $githubClientSecret,
                                 redirectUrl:
-                                    'https://authmelosmodule.firebaseapp.com/__/auth/handler',
+                                    $githubRedirectUrl,
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message,cred) {
                                   snackBar(message, context);
@@ -399,10 +413,10 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             text: 'Twitter Login',
                             onPressed: () => signInWithTwitter(
                                 context: context,
-                                apiKey: '1US6bc6IKBeATjaumK9CBdpbJ',
+                                apiKey: $twitterApiKey,
                                 apiSecretKey:
-                                    'IEsxMVndnZKtYAT8Us1xs59WcfX2IayQr3IIFYXDXbzS4rMrE6',
-                                redirectURI: 'example://',
+                                    $twitterApiSecretKey,
+                                redirectURI: $twitterRedirectURI,
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message,cred) {
                                   snackBar(message, context);

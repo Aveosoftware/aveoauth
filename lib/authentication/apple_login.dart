@@ -20,7 +20,6 @@ mixin AppleLogin {
 
   signInWithApple(
       {required FirebaseAuth firebaseInstance,
-      required BuildContext context,
       required String clientId,
       required String redirectUri,
       required SussessCallback onSuccess,
@@ -41,9 +40,12 @@ mixin AppleLogin {
         ],
         nonce: nonce,
         webAuthenticationOptions: WebAuthenticationOptions(
-          clientId: "com.aveosoftware.applelogintestservice",
+          // clientId: "com.aveosoftware.applelogintestservice",
+          clientId: clientId,
+          // redirectUri: Uri.parse(
+          //     "https://navy-hospitable-beast.glitch.me/callbacks/sign_in_with_apple"),
           redirectUri: Uri.parse(
-              "https://navy-hospitable-beast.glitch.me/callbacks/sign_in_with_apple"),
+              redirectUri),
         ),
       );
       logger.i("Apple Identifier Token: ${appleCredential.identityToken}");
