@@ -204,7 +204,7 @@ class _Login3PageState extends State<Login3Page>
                                   {
                                     signUpWithFirebaseEmail(
                                         firebaseInstance: FirebaseAuth.instance,
-                                        onSuccess: (message) {
+                                        onSuccess: (message,cred) {
                                           snackBar(message, context);
                                         },
                                         onError: (error) {
@@ -219,7 +219,7 @@ class _Login3PageState extends State<Login3Page>
                                   {
                                     signInWithFirebaseEmail(
                                         firebaseInstance: FirebaseAuth.instance,
-                                        onSuccess: (message) {
+                                        onSuccess: (message,cred) {
                                           snackBar(message, context);
                                         },
                                         onError: (error) {
@@ -292,7 +292,7 @@ class _Login3PageState extends State<Login3Page>
                             text: 'Google Login',
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message,cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -306,7 +306,7 @@ class _Login3PageState extends State<Login3Page>
                               text: 'Facebook Login',
                               onPressed: () => signInWithFacebook(
                                   firebaseInstance: FirebaseAuth.instance,
-                                  onSuccess: (message) {
+                                  onSuccess: (message,cred) {
                                     snackBar(message, context);
                                   },
                                   onError: (error) {

@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage>
                       text: 'Facebook Login',
                       onPressed: () => signInWithFacebook(
                           firebaseInstance: FirebaseAuth.instance,
-                          onSuccess: (message) {
+                          onSuccess: (message,cred) {
                             snackBar(message);
                           },
                           onError: (error) {
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage>
                         redirectUrl:
                             'https://authmelosmodule.firebaseapp.com/__/auth/handler',
                         firebaseInstance: FirebaseAuth.instance,
-                        onSuccess: (message) {
+                        onSuccess: (message,cred) {
                           snackBar(message);
                         },
                         onError: (error) {
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage>
                             'IEsxMVndnZKtYAT8Us1xs59WcfX2IayQr3IIFYXDXbzS4rMrE6',
                         redirectURI: 'example://',
                         firebaseInstance: FirebaseAuth.instance,
-                        onSuccess: (message) {
+                        onSuccess: (message,cred) {
                           snackBar(message);
                         },
                         onError: (error) {

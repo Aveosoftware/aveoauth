@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:aveoauth/aveoauth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'login_snackbar.dart';
-import 'login_social_login_button.dart';
-import 'login_text_field.dart';
-import 'login_verify_phone.dart';
+import 'demo33_snackbar.dart';
+import 'demo33_social_login_button.dart';
+import 'demo33_text_field.dart';
+import 'demo33_verify_phone.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+class Demo33Page extends StatefulWidget {
+  Demo33Page({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Demo33Page> createState() => _Demo33PageState();
 }
 
-class _LoginPageState extends State<LoginPage>
+class _Demo33PageState extends State<Demo33Page>
     with
         AppleLogin,
         GoogleLogin,
@@ -299,12 +299,12 @@ class _LoginPageState extends State<LoginPage>
                     ),
                   if (!isForgetPasswordMode) const Text('Or'),
                   if (!isForgetPasswordMode)
-                    Column(
+                    Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           CustomButton(
-                            isLabelVisible: true,
+                            isLabelVisible: false,
                             logoUrl:
                                 "https://img.icons8.com/fluency/344/google-plus-squared.png",
                             text: 'Google Login',
@@ -318,7 +318,7 @@ class _LoginPageState extends State<LoginPage>
                                 }),
                           ),
                           CustomButton(
-                              isLabelVisible: true,
+                              isLabelVisible: false,
                               logoUrl:
                                   "https://www.facebook.com/images/fb_icon_325x325.png",
                               text: 'Facebook Login',
@@ -331,13 +331,13 @@ class _LoginPageState extends State<LoginPage>
                                     snackBar(error, context);
                                   })),
                           CustomButton(
-                              isLabelVisible: true,
+                              isLabelVisible: false,
                               logoUrl:
                                   "https://img.icons8.com/ios-glyphs/344/mac-os.png",
                               text: 'Apple Login',
                               onPressed: () {}),
                           CustomButton(
-                            isLabelVisible: true,
+                            isLabelVisible: false,
                             logoUrl:
                                 "https://img.icons8.com/glyph-neue/344/github.png",
                             text: 'Github Login',
@@ -357,7 +357,7 @@ class _LoginPageState extends State<LoginPage>
                                 }),
                           ),
                           CustomButton(
-                            isLabelVisible: true,
+                            isLabelVisible: false,
                             logoUrl:
                                 "https://img.icons8.com/color/344/twitter--v1.png",
                             text: 'Twitter Login',

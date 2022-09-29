@@ -34,7 +34,7 @@ class _Login2PageState extends State<Login2Page>
                       text: 'Facebook Login',
                       onPressed: () => signInWithFacebook(
                           firebaseInstance: FirebaseAuth.instance,
-                          onSuccess: (message) {
+                          onSuccess: (message,cred) {
                             snackBar(message, context);
                           },
                           onError: (error) {
@@ -50,7 +50,7 @@ class _Login2PageState extends State<Login2Page>
                         clientSecret: 'dxfgb',
                         redirectUrl: 'sdfgh',
                         firebaseInstance: FirebaseAuth.instance,
-                        onSuccess: (message) {
+                        onSuccess: (message,cred) {
                           snackBar(message, context);
                         },
                         onError: (error) {

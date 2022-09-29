@@ -37,7 +37,7 @@ class OtpLoginPage extends StatelessWidget with PhoneLogin {
                 phoneNumber: phoneNumber,
                 smsCode: otpCodeController.text,
                 firebaseInstance: FirebaseAuth.instance,
-                onSuccess: (message) {
+                onSuccess: (message,cred) {
                   snackBar(message, context);
                 },
                 onError: (error) {

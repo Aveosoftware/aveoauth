@@ -222,7 +222,7 @@ class _LogPageState extends State<LogPage>
                                   {
                                     signUpWithFirebaseEmail(
                                         firebaseInstance: FirebaseAuth.instance,
-                                        onSuccess: (message) {
+                                        onSuccess: (message,cred) {
                                           snackBar(message, context);
                                         },
                                         onError: (error) {
@@ -237,7 +237,7 @@ class _LogPageState extends State<LogPage>
                                   {
                                     signInWithFirebaseEmail(
                                         firebaseInstance: FirebaseAuth.instance,
-                                        onSuccess: (message) {
+                                        onSuccess: (message,cred) {
                                           snackBar(message, context);
                                         },
                                         onError: (error) {
@@ -306,11 +306,11 @@ class _LogPageState extends State<LogPage>
                           CustomButton(
                             isLabelVisible: false,
                             logoUrl:
-                                "https://img.icons8.com/fluency/344/google-plus-squared.png",
+                                "https://img.icons8.com/color/96/000000/google-logo.png",
                             text: 'Google Login',
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message,cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -324,7 +324,7 @@ class _LogPageState extends State<LogPage>
                               text: 'Facebook Login',
                               onPressed: () => signInWithFacebook(
                                   firebaseInstance: FirebaseAuth.instance,
-                                  onSuccess: (message) {
+                                  onSuccess: (message,cred) {
                                     snackBar(message, context);
                                   },
                                   onError: (error) {
@@ -349,7 +349,7 @@ class _LogPageState extends State<LogPage>
                                 redirectUrl:
                                     'https://authmelosmodule.firebaseapp.com/__/auth/handler',
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message,cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -368,7 +368,7 @@ class _LogPageState extends State<LogPage>
                                     'IEsxMVndnZKtYAT8Us1xs59WcfX2IayQr3IIFYXDXbzS4rMrE6',
                                 redirectURI: 'example://',
                                 firebaseInstance: FirebaseAuth.instance,
-                                onSuccess: (message) {
+                                onSuccess: (message,cred) {
                                   snackBar(message, context);
                                 },
                                 onError: (error) {

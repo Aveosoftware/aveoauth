@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage>
               onPressed: () => verifyPhoneNumber(
                   phoneNumber: phoneNumberController.text,
                   firebaseInstance: FirebaseAuth.instance,
-                  onSuccess: (message) {
+                  onSuccess: (message,cred) {
                     snackBar(message, context);
                   },
                   onError: (error) {

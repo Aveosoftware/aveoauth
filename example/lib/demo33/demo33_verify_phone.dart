@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:aveoauth/aveoauth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'login3_otp_page.dart';
-import 'login3_snackbar.dart';
-import 'login3_social_login_button.dart';
-import 'login3_text_field.dart';
+import 'demo33_otp_page.dart';
+import 'demo33_snackbar.dart';
+import 'demo33_social_login_button.dart';
+import 'demo33_text_field.dart';
 
 class VerifyPhone extends StatefulWidget {
   const VerifyPhone({Key? key}) : super(key: key);
