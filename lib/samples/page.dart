@@ -377,8 +377,8 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             text: 'Apple Login',
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
-                                clientId:$appleClientId,
-                                redirectUri:$appleRedirectUri,
+                                clientId:'$appleClientId',
+                                redirectUri:'$appleRedirectUri',
                                 onSuccess: (message, cred) {
                                   snackBar(message, context);
                                 },
@@ -393,11 +393,11 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             text: 'Github Login',
                             onPressed: () => signInWithGithub(
                                 context: context,
-                                clientId: $githubClientId,
+                                clientId: '$githubClientId',
                                 clientSecret:
-                                    $githubClientSecret,
+                                    '$githubClientSecret',
                                 redirectUrl:
-                                    $githubRedirectUrl,
+                                    '$githubRedirectUrl',
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message,cred) {
                                   snackBar(message, context);
@@ -413,10 +413,10 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             text: 'Twitter Login',
                             onPressed: () => signInWithTwitter(
                                 context: context,
-                                apiKey: $twitterApiKey,
+                                apiKey: '$twitterApiKey',
                                 apiSecretKey:
-                                    $twitterApiSecretKey,
-                                redirectURI: $twitterRedirectURI,
+                                    '$twitterApiSecretKey',
+                                redirectURI: '$twitterRedirectURI',
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message,cred) {
                                   snackBar(message, context);
