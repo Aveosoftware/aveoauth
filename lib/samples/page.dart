@@ -373,7 +373,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                           ${isAppleLogin ? '''CustomButton(
                             isLabelVisible: $isSocialLoginButtonLableEnabled,
                             logoUrl:
-                                ""https://img.icons8.com/ios-glyphs/344/mac-os.png"",
+                                "https://img.icons8.com/ios-glyphs/344/mac-os.png",
                             text: 'Apple Login',
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
