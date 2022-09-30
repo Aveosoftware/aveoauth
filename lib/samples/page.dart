@@ -247,6 +247,9 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message) {
                                     snackBar(message, context);
+                                    setState(() {
+                                      isForgetPasswordMode = false;
+                                    });
                                   },
                                   onError: (error) {
                                     snackBar(error, context);
@@ -375,7 +378,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             logoUrl:
                                 "https://img.icons8.com/ios-glyphs/344/mac-os.png",
                             text: 'Apple Login',
-                            onPressed: () => signInWithGoogle(
+                            onPressed: () => signInWithApple(
                                 firebaseInstance: FirebaseAuth.instance,
                                 clientId:'$appleClientId',
                                 redirectUri:'$appleRedirectUri',
