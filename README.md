@@ -1,6 +1,47 @@
-# Authentication
+# Aveo Authentication
 
-Apple login is been implemented but not ready for use.
+- [Aveo Authentication](#aveo-authentication)
+  - [Platform Support](#platform-support)
+  - [Configration](#configration)
+  - [Usage](#usage)
+    - [General utility](#general-utility)
+- [Google Login](#google-login)
+  - [Configuration for Google Login for Android](#configuration-for-google-login-for-android)
+  - [Configuration for Google Login for IOS](#configuration-for-google-login-for-ios)
+  - [Usage](#usage-1)
+- [Github Login](#github-login)
+  - [Configuration for Github Login](#configuration-for-github-login)
+  - [Usage](#usage-2)
+- [Apple Login](#apple-login)
+  - [Configuration for Apple Login](#configuration-for-apple-login)
+    - [Register an App ID](#register-an-app-id)
+    - [Create a Service ID](#create-a-service-id)
+  - [Configuration for Apple Login for Android](#configuration-for-apple-login-for-android)
+    - [iOS](#ios)
+      - [Example](#example)
+      - [Your App](#your-app)
+  - [Usage](#usage-3)
+- [Facebook Login](#facebook-login)
+  - [Configuration for Facebook Login on Android](#configuration-for-facebook-login-on-android)
+  - [Configuration for Facebook Login on IOS](#configuration-for-facebook-login-on-ios)
+  - [Usage](#usage-4)
+- [Twitter Login](#twitter-login)
+  - [Configuration for Twitter Login](#configuration-for-twitter-login)
+  - [Usage](#usage-5)
+- [Phone Login](#phone-login)
+  - [Configuration for Phone Login Android](#configuration-for-phone-login-android)
+  - [Configuration for Phone Login IOS](#configuration-for-phone-login-ios)
+  - [Usage](#usage-6)
+- [Firebase-Email Login](#firebase-email-login)
+  - [Configuration for Firebase-Email Login](#configuration-for-firebase-email-login)
+  - [Usage](#usage-7)
+    - [Sign-up to Firebase Email Login](#sign-up-to-firebase-email-login)
+    - [Sign-in to Firebase Email Login](#sign-in-to-firebase-email-login)
+    - [Reset password for Firebase Email Login](#reset-password-for-firebase-email-login)
+- [Biometric Login](#biometric-login)
+  - [Configuration for Biometric Login for Android](#configuration-for-biometric-login-for-android)
+  - [Configuration for Biometric Login for IOS](#configuration-for-biometric-login-for-ios)
+  - [Usage](#usage-8)
 
 ## Platform Support
 
@@ -11,19 +52,72 @@ Apple login is been implemented but not ready for use.
 | Login from | &check; | &check; | &cross; | &cross; | &cross; | &cross; |
 
 ## Configration
+Add the following to `android/app/build`.gradle:
+```gradle
+android {
+  compileSdkVersion 32
+  defaultConfig {
+    minSdkVersion 19
+    multiDexEnabled true 
+  }
+}
+dependencies {
+  implementation 'com.android.support:multidex:1.0.3'
+}
+```
+Generate and Add `SHA` key to Firebase:
 
-Generate and Add SHA key to Firebase
-
-For Debug mode:
+For `Debug` mode:
 
 ```bash
 keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
 ```
 
-For Release mode:
+For `Release` mode:
 
 ```bash
 keytool -list -v -keystore {keystore_name} -alias {alias_name}
+```
+
+Add dependecy:
+```yaml
+  aveoauth:
+    git:
+      url: https://gitlab+deploy-token-1292132:ZJTMXqp-c3R4-kynasek@gitlab.com/aveo-mobile-products/aveoauth.git
+      ref: master
+  firebase_auth: ^3.10.0
+  firebase_core: ^1.24.0
+```
+Add platform in `ios/Podfile`
+```Podfile
+platform :ios, '12.0'
+```
+ Add **Firebase** to your **Flutter Application**
+  [Adding Firebase](https://firebase.google.com/docs/flutter/)
+
+Ensure FIrebase is `initialized` in main.dart
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
+}
+```
+
+For `accessing` and `generating` aveoauth login CLI
+- `Activating` aveoauth login CLI
+```bash
+  dart pub global activate -sgit https://gitlab+deploy-token-1292132:ZJTMXqp-c3R4-kynasek@gitlab.com/aveo-mobile-products/aveoauth.git
+```
+- `Deactivating` aveoauth login CLI
+```bash
+  dart pub global deactivate aveoauth
+```
+- `Generating` Login Page
+```bash
+aveoauth create page:login
 ```
 
 ## Usage
@@ -52,23 +146,14 @@ TextButton(
 
 - Add **Firebase** to your **Flutter Application**
   [Adding Firebase](https://firebase.google.com/docs/flutter/)
-- Add dependency in **android/app/src/build.grid**
 
-```dart
-dependencies {
-	implementation 'com.android.support:multidex:1.0.3'
-	}
-defaultConfig {
-	multiDexEnabled true
-	}
-```
 ## Configuration for Google Login for IOS
 - Make sure the file you downloaded file is named `GoogleService-Info.plist`.
 - Move or copy `GoogleService-Info.plist` into the [my_project]/ios/Runner directory.
 - Open `Xcode`, then right-click on Runner directory and select Add Files to `"Runner"`.
 - Select `GoogleService-Info.plist` from the file manager.
 - A dialog will show up and ask you to select the targets, select the Runner target.
-- In `ios/Runner/Base.Iproj/Info.plist` add below
+- In `ios/Runner/Base.Iproj/Info.plist` add below with your google schemes.
 ```plist
 <key>CFBundleURLTypes</key>
 <array>
@@ -352,7 +437,7 @@ dependencies {
 ```
 
 - Open your `/app/src/main/res/values/strings.xml` file.
-- Add string elements with the names facebook_app_id, `fb_login_protocol_scheme` and` facebook_client_token`, and set the values to your `App ID` and `Client Token`.
+- Add string elements with the names `facebook_app_id`, `fb_login_protocol_scheme` and` facebook_client_token`, and set the values to your `App ID` and `Client Token`.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -387,7 +472,7 @@ dependencies {
 </application>
 ```
 
-- In app -> src -> main -> AndroidManifest.xml add the following under `manifest`
+- In `app -> src -> main -> AndroidManifest.xml` add the following under `manifest`
 
 ```xml
 </manifest>
@@ -700,7 +785,7 @@ Add the dependency for Android in `app -> src -> main -> AndroidManifest.xml` un
 <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
 ```
 
-Add the dependency for Android in `app -> src -> main -> kotlin -> com -> example -> example -> MainActivity.kt` replace with below snippet excluding package declaration.
+Add the dependency for Android in `app -> src -> main -> kotlin -> com -> appname -> appname -> MainActivity.kt` replace with below snippet excluding package declaration.
 
 ```kotlin
 import io.flutter.embedding.android.FlutterFragmentActivity

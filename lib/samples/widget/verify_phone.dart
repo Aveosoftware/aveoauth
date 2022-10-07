@@ -39,8 +39,7 @@ class _VerifyPhoneState extends State<VerifyPhone>
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
           child: SizedBox(
@@ -130,7 +129,6 @@ class _VerifyPhoneState extends State<VerifyPhone>
             ),
           ),
         ),
-      ),
     );
   }
 }

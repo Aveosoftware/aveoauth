@@ -33,7 +33,7 @@ mixin FirebaseEmailLogin {
           .createUserWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
       onSuccess(
-          '${userCredential.user?.displayName ?? ''} SignUp in successfully',userCredential);
+          '${userCredential.user?.displayName ?? ''} SignUp successfully',userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);

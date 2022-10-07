@@ -79,8 +79,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
   
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-      child: Scaffold(
+    return Scaffold(
         body: SingleChildScrollView(
           child: SizedBox(
             height: MediaQuery.of(context).size.height,
@@ -137,22 +136,25 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                   ),
                   Row(
                     children: [
-                      Padding(
+                      Expanded(
+                      child: Padding(
                         padding: const EdgeInsets.only(
                             top: 20.0, left: 20.0, bottom: 20.0),
                         child: Text(
                           isForgetPasswordMode
                               ? 'Enter email address to reset password'
-                              : isSignUpMode
+                              : !isSignUpMode
                                   ? 'Enter your email address to signin'
                                   : 'Enter your email and password for signup',
                           style: const TextStyle(color: Colors.grey),
                         ),
-                      ),
+                      ),),
                       if (!isForgetPasswordMode)
                         if (isSignUpMode)
-                          TextButton(
+                          Expanded(
+                          child: TextButton(
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               setState(() {
                                 isSignUpMode = false;
                               });
@@ -162,7 +164,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                               style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary),
                             ),
-                          )
+                          ),),
                     ],
                   ),
                   CustomTextField(
@@ -213,6 +215,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                         children: [
                           TextButton(
                             onPressed: () {
+                              FocusScope.of(context).unfocus();
                               setState(() {
                                 isForgetPasswordMode = true;
                               });
@@ -247,6 +250,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message) {
                                     snackBar(message, context);
+                                    FocusScope.of(context).unfocus();
                                     setState(() {
                                       isForgetPasswordMode = false;
                                     });
@@ -266,6 +270,10 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                         firebaseInstance: FirebaseAuth.instance,
                                         onSuccess: (message,cred) {
                                           snackBar(message, context);
+                                          FocusScope.of(context).unfocus();
+                                          setState(() {
+                                            isSignUpMode = false;
+                                          });
                                         },
                                         onError: (error) {
                                           snackBar(error, context);
@@ -281,6 +289,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                         firebaseInstance: FirebaseAuth.instance,
                                         onSuccess: (message, cred) {
                                           snackBar(message, context);
+                                          FocusScope.of(context).unfocus();
                                         },
                                         onError: (error) {
                                           snackBar(error, context);
@@ -298,6 +307,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             color: Theme.of(context).colorScheme.primary),
                       ),
                       onPressed: () => setState(() {
+                        FocusScope.of(context).unfocus();
                         isForgetPasswordMode = false;
                       }),
                     ),
@@ -325,6 +335,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                           Center(
                             child: TextButton(
                               onPressed: () {
+                                FocusScope.of(context).unfocus();
                                 setState(() {
                                   isSignUpMode = true;
                                 });
@@ -339,7 +350,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                           )
                       ],
                     ),
-                  if (!isForgetPasswordMode) const Text('Or'),
+                  ${isGoogleLogin || isAppleLogin || isBiometricLogin || isFacebookLogin || isGithubLogin ? '''if (!isForgetPasswordMode) const Text('Or'),''' : ''}
                   if (!isForgetPasswordMode)
                     ${isSocialLoginButtonLableEnabled ? 'Column' : 'Row'}(
                       mainAxisSize: MainAxisSize.min,
@@ -434,7 +445,6 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
             ),
           ),
         ),
-      ),
     );
     }
 }

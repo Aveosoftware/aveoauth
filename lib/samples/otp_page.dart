@@ -56,8 +56,7 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(),
         body: Form(
           key: formKey,
@@ -161,7 +160,6 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
             ],
           ),
         ),
-      ),
     );
   }
 }
