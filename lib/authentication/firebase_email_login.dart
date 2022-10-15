@@ -12,7 +12,8 @@ mixin FirebaseEmailLogin {
           .signInWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
       onSuccess(
-          '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
+          '${userCredential.user?.displayName ?? ''} Logged in successfully',
+          userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
@@ -32,13 +33,13 @@ mixin FirebaseEmailLogin {
       UserCredential userCredential = await firebaseInstance
           .createUserWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
-      onSuccess(
-          '${userCredential.user?.displayName ?? ''} SignUp successfully',userCredential);
+      onSuccess('${userCredential.user?.displayName ?? ''} SignUp successfully',
+          userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
     } catch (e) {
-      logger.e("Email Error",e.toString());
+      logger.e("Email Error", e.toString());
     }
   }
 
@@ -55,7 +56,33 @@ mixin FirebaseEmailLogin {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
       onError(errorMessage);
     } catch (e) {
-      logger.e("Email Error",e.toString());
+      logger.e("Email Error", e.toString());
+    }
+  }
+
+  updatePasswordWithFirebaseEmail({
+    required FirebaseAuth firebaseInstance,
+    required GeneralSussessCallback onSuccess,
+    required ErrorCallback onError,
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    try {
+      User currentUser = FirebaseAuth.instance.currentUser!;
+      String? userEmail = currentUser.email;
+      AuthCredential authCredential = EmailAuthProvider.credential(
+          email: userEmail!, password: oldPassword);
+      UserCredential authResult =
+          await currentUser.reauthenticateWithCredential(authCredential);
+      if(authResult.user!=null){
+      await currentUser.updatePassword(newPassword);
+      onSuccess('Password updated successfully');
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = ExceptionHandlingHelper.handleException(e.code);
+      onError(errorMessage);
+    } catch (e) {
+      logger.e("Password updating Error", e.toString());
     }
   }
 

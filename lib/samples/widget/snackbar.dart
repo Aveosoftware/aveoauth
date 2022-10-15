@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
   String get content => '''$import
 
 snackBar(message, context) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
   final snackBar = SnackBar(
     content: Text(message),
   );
