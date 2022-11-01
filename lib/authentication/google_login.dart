@@ -21,13 +21,17 @@ mixin GoogleLogin {
             await firebaseInstance.signInWithCredential(credential);
         Mode().changeLoginMode = LoginMode.google;
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',
+            userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMeessage = ExceptionHandlingHelper.handleException(e.code);
         onError(errorMeessage);
       }
+    } on PlatformException catch (e) {
+      logger.e("Google Platform Exception", e.toString());
+      return false;
     } catch (error) {
-      logger.e("Google Error",error.toString());
+      logger.e("Google Error", error.toString());
     }
   }
 
@@ -35,5 +39,4 @@ mixin GoogleLogin {
     await GoogleSignIn().disconnect();
     firebaseInstance.signOut();
   }
-  
 }
