@@ -66,10 +66,12 @@ mixin AppleLogin {
             '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
+        logger.e("Apple Error", errorMessage);
         onError(errorMessage);
       }
     } catch (error) {
       logger.e("Apple Error", error.toString());
+      onError('Something went wrong');
     }
   }
 

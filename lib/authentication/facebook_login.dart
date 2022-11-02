@@ -5,26 +5,40 @@ mixin FacebookLogin {
       {required FirebaseAuth firebaseInstance,
       required SussessCallback onSuccess,
       required ErrorCallback onError}) async {
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-    if (loginResult.status == LoginStatus.success) {
-      // Create a credential from the access token
-      final OAuthCredential facebookAuthCredential =
-          FacebookAuthProvider.credential(loginResult.accessToken!.token);
-      try {
-        UserCredential userCredential =
-            await firebaseInstance.signInWithCredential(facebookAuthCredential);
-        Mode().changeLoginMode = LoginMode.facebook;
-        onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
-      } on FirebaseAuthException catch (e) {
-        String errorMessage = ExceptionHandlingHelper.handleException(e.code);
-        onError(errorMessage);
-      } catch (e) {
-        logger.e("Facebook Error",e.toString());
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+      if (loginResult.status == LoginStatus.success) {
+        // Create a credential from the access token
+        final OAuthCredential facebookAuthCredential =
+            FacebookAuthProvider.credential(loginResult.accessToken!.token);
+        try {
+          UserCredential userCredential = await firebaseInstance
+              .signInWithCredential(facebookAuthCredential);
+          Mode().changeLoginMode = LoginMode.facebook;
+          onSuccess(
+              '${userCredential.user?.displayName ?? ''} Logged in successfully',
+              userCredential);
+        } on FirebaseAuthException catch (e) {
+          String errorMessage = ExceptionHandlingHelper.handleException(e.code);
+          logger.e("Facebook Error", errorMessage);
+          onError(errorMessage);
+        } catch (e) {
+          logger.e("Facebook Error", e.toString());
+          onError('Something went wrong');
+        }
+      } else if (loginResult.status == LoginStatus.cancelled) {
+        onError('Facebook Signup/Login cancelled');
+      } else if (loginResult.status == LoginStatus.operationInProgress) {
+      } else {
+        logger.e("Facebook Login Message", loginResult.message);
+        onError('Something went wrong');
       }
-    } else {
-      logger.e("Facebook Login Status",loginResult.status.toString());
-      logger.e("Facebook Login Message",loginResult.message);
+    } on PlatformException catch (e) {
+      logger.e("Facebook Platform Exception", e.toString());
+      onError('Something went wrong');
+    } catch (e) {
+      logger.e("Facebook Error", e.toString());
+      onError('Something went wrong');
     }
   }
 

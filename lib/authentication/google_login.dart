@@ -27,6 +27,7 @@ mixin GoogleLogin {
         } on FirebaseAuthException catch (e) {
           String errorMeessage =
               ExceptionHandlingHelper.handleException(e.code);
+          logger.e("Google Error", errorMeessage);
           onError(errorMeessage);
         }
       } else {
@@ -34,9 +35,10 @@ mixin GoogleLogin {
       }
     } on PlatformException catch (e) {
       logger.e("Google Platform Exception", e.toString());
-      return false;
+      onError('Something went wrong');
     } catch (error) {
       logger.e("Google Error", error.toString());
+      onError('Something went wrong');
     }
   }
 
