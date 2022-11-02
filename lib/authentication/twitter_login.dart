@@ -40,7 +40,7 @@ mixin TwitterSocialLogin {
         }
       } else if (result.status == TwitterLoginStatus.cancelledByUser) {
         logger.e("Twitter Login Error", result.errorMessage);
-        onError('Github Signup/Login cancelled');
+        onError('Twitter Signup/Login cancelled');
       } else {
         logger.e("Twitter Login Error", result.errorMessage);
         onError('Something went wrong');
