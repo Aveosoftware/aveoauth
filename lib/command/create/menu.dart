@@ -3,8 +3,9 @@ import 'package:dcli/dcli.dart';
 class Menu {
   final List<String> choices;
   final String title;
+  final int defaultValue;
 
-  Menu(this.choices, {this.title = ''});
+  Menu(this.choices, {this.title = '',this.defaultValue=0});
 
   Answer choose() {
     // final dialog = CLI_Dialog(listQuestions: [
@@ -18,7 +19,7 @@ class Menu {
     // final result = answer['result'] as String;
     print("");
     final result =
-        menu(prompt: title, options: choices, defaultOption: choices[0],);
+        menu(prompt: title, options: choices, defaultOption: choices[defaultValue],);
     final index = choices.indexOf(result);
 
     return Answer(result: result, index: index);
