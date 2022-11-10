@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:aveoauth/command/command.dart';
+import 'package:aveoauth/command/create/log_utils.dart';
 import 'package:aveoauth/command/create/menu.dart';
 import 'package:aveoauth/core/structure.dart';
 import 'package:aveoauth/functions/create/create_single_file.dart';
@@ -46,15 +47,18 @@ class CreatePageCommand extends Command {
       return newValue;
     }
 
+    LogService.divider();
+    echo('\n');
     // Select the type of Authentication style
     Menu authenticationStyle = Menu([
       'Login Lite (Email Login + Google and Facebook Login)',
       'Login Plus(Email Login + All Social Login + Phone and Biometric Login)',
       'Selective Login (Customizable)',
     ], title: 'Select which type of Authentication you want to create ?');
-    final authenticationStyleResult = authenticationStyle.choose();
+    final Answer authenticationStyleResult = authenticationStyle.choose();
 
     if (authenticationStyleResult.index == 0) {
+      LogService.info('Login Lite Selected');
       // Login Lite
       isAppleLogin = false;
       isBiometricLogin = false;
@@ -66,6 +70,7 @@ class CreatePageCommand extends Command {
       isTwitterLogin = false;
       isSocialLoginButtonLableEnabled = false;
     } else if (authenticationStyleResult.index == 1) {
+      LogService.info('Login Plus Selected');
       // Login Plus
       isAppleLogin = true;
       isBiometricLogin = true;
@@ -76,7 +81,7 @@ class CreatePageCommand extends Command {
       isPhoneLogin = true;
       isTwitterLogin = true;
       isSocialLoginButtonLableEnabled = false;
-      
+
       appleClientId =
           ask('Enter Apple clientId', defaultValue: '', required: true);
       appleRedirectUri =
@@ -94,7 +99,9 @@ class CreatePageCommand extends Command {
       twitterRedirectURI =
           ask('Enter Twitter redirectURI', defaultValue: '', required: true);
     } else {
+      LogService.info('Custom Login Selected');
       // Selective Login
+      LogService.divider();
 
       // Enable Apple Login
       Menu appleLogin = Menu([
@@ -109,10 +116,12 @@ class CreatePageCommand extends Command {
             ask('Enter Apple clientId', defaultValue: '', required: true);
         appleRedirectUri =
             ask('Enter Apple Redirect URL', defaultValue: '', required: true);
-        echo('Apple Login is enabled\n\n');
+        LogService.success('Apple Login is enabled\n\n');
       } else {
         isAppleLogin = false;
+        LogService.error('Apple Login is enabled\n\n');
       }
+      LogService.divider();
 
       // Enable Biometric Login
       Menu biometricLogin = Menu([
@@ -123,10 +132,12 @@ class CreatePageCommand extends Command {
 
       if (biometricLoginResult.index == 0) {
         isBiometricLogin = true;
-        echo('Biometric Login is enabled\n\n');
+        LogService.success('Biometric Login is enabled\n\n');
       } else {
         isBiometricLogin = false;
+        LogService.error('Biometric Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Facebook Login
       Menu facebookLogin = Menu([
@@ -137,11 +148,12 @@ class CreatePageCommand extends Command {
 
       if (facebookLoginResult.index == 0) {
         isFacebookLogin = true;
-        echo('Facebook Login is enabled\n\n');
+        LogService.success('Facebook Login is enabled\n\n');
       } else {
         isFacebookLogin = false;
-        echo('Facebook Login is disabled\n\n');
+        LogService.error('Facebook Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Firebase Email Login
       Menu firebaseEmailLogin = Menu([
@@ -152,11 +164,12 @@ class CreatePageCommand extends Command {
 
       if (firebaseEmailLoginResult.index == 0) {
         isFirebaseEmailLogin = true;
-        echo('Firebase Email Login is enabled\n\n');
+        LogService.success('Firebase Email Login is enabled\n\n');
       } else {
         isFirebaseEmailLogin = false;
-        echo('Firebase Email Login is disabled\n\n');
+        LogService.error('Firebase Email Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Github Login
       Menu githubLogin = Menu([
@@ -173,11 +186,12 @@ class CreatePageCommand extends Command {
             ask('Enter Github clientSecret', defaultValue: '', required: true);
         githubRedirectUrl =
             ask('Enter Github redirectUrl', defaultValue: '', required: true);
-        echo('Github Login is enabled\n\n');
+        LogService.success('Github Login is enabled\n\n');
       } else {
         isGithubLogin = false;
-        echo('Github Login is disabled\n\n');
+        LogService.error('Github Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Google Login
       Menu googleLogin = Menu([
@@ -188,11 +202,12 @@ class CreatePageCommand extends Command {
 
       if (googleLoginResult.index == 0) {
         isGoogleLogin = true;
-        echo('Google Login is enabled\n\n');
+        LogService.success('Google Login is enabled\n\n');
       } else {
         isGoogleLogin = false;
-        echo('Google Login is disabled\n\n');
+        LogService.error('Google Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Phone Login
       Menu phoneLogin = Menu([
@@ -203,11 +218,12 @@ class CreatePageCommand extends Command {
 
       if (phoneLoginResult.index == 0) {
         isPhoneLogin = true;
-        echo('Phone Login is enabled\n\n');
+        LogService.success('Phone Login is enabled\n\n');
       } else {
         isPhoneLogin = false;
-        echo('Phone Login is disabled\n\n');
+        LogService.error('Phone Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Twitter Login
       Menu twitterLogin = Menu([
@@ -224,11 +240,12 @@ class CreatePageCommand extends Command {
             ask('Enter Twitter apiSecretKey', defaultValue: '', required: true);
         twitterRedirectURI =
             ask('Enter Twitter redirectURI', defaultValue: '', required: true);
-        echo('Twitter Login is enabled\n\n');
+        LogService.success('Twitter Login is enabled\n\n');
       } else {
         isTwitterLogin = false;
-        echo('Twitter Login is disabled\n\n');
+        LogService.error('Twitter Login is disabled\n\n');
       }
+      LogService.divider();
 
       // Enable Label for social login button
       Menu socialLoginButtonLableEnabled = Menu([
@@ -240,13 +257,13 @@ class CreatePageCommand extends Command {
 
       if (socialLoginButtonLableEnabledResult.index == 0) {
         isSocialLoginButtonLableEnabled = true;
-        echo('Social Login Buttons label enabled\n\n');
+        LogService.success('Social Login Buttons label enabled\n\n');
       } else {
         isSocialLoginButtonLableEnabled = false;
-        echo('Social Login Buttons label disabled\n\n');
+        LogService.error('Social Login Buttons label disabled\n\n');
       }
+      LogService.divider();
     }
-
     var fileModel =
         Structure.model(name, 'page', true, on: onCommand, folderName: name);
     var pathSplit = Structure.safeSplitPath(fileModel.path!);
@@ -353,7 +370,8 @@ class CreatePageCommand extends Command {
         null,
       );
     }
-
-    echo('${name.pascalCase} page created successfully\n\n');
+    echo('\n');
+    LogService.success('${name.pascalCase} created successfully\n');
+    LogService.divider();
   }
 }

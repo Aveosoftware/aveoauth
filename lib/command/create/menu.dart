@@ -18,7 +18,7 @@ class Menu {
     // final result = answer['result'] as String;
     print("");
     final result =
-        menu(prompt: title, options: choices, defaultOption: choices[0]);
+        menu(prompt: title, options: choices, defaultOption: choices[0],);
     final index = choices.indexOf(result);
 
     return Answer(result: result, index: index);
