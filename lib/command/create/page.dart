@@ -49,6 +49,8 @@ class CreatePageCommand extends Command {
 
     LogService.divider();
     echo('\n');
+    echo("Enter number");
+    int? n1 = int.parse(stdin.readLineSync()!);
     // Select the type of Authentication style
     Menu authenticationStyle = Menu([
       'Login Lite (Email Login + Google and Facebook Login)',
