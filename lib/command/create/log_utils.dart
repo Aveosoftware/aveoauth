@@ -9,30 +9,24 @@ class LogService {
   static final AnsiPen _penInfo = AnsiPen()..yellow(bold: true);
   static final AnsiPen _penDivider = AnsiPen()..blue();
 
-  static final AnsiPen code = AnsiPen()
-    ..black(bold: false, bg: true)
-    ..white();
-
-  static final AnsiPen codeBold = AnsiPen()..gray(level: 1);
-
-//  static var _errorWrapper = '_' * 40;
   static void error(String msg) {
     const sep = '\n';
-    // to check: ⚠ ❌✖✕
-    msg = '✖  ${_penError(msg.trim())}';
-    msg = msg + sep;
+    msg = '✖  ${_penError(msg.trimRight())}';
+    msg = sep + msg + sep;
     print(msg);
   }
 
-  static void success(dynamic msg) {
-    print('✓  ${_penSuccess(msg.toString())}');
+  static void success(String msg) {
+    const sep = '\n';
+     msg = '✓  ${_penSuccess(msg.trimRight())}';
+     msg = sep + msg + sep;
+    print(msg);
   }
 
-  static void info(String msg, [bool trim = false, bool newLines = true]) {
-    final sep = newLines ? '\n' : '';
-    if (trim) msg = msg.trim();
-    msg = _penInfo(msg);
-    msg = sep + msg.toString() + sep;
+  static void info(String msg) {
+    const sep = '\n';
+    msg = _penInfo(msg.trimRight());
+    msg = sep + msg + sep;
     print(msg);
   }
 

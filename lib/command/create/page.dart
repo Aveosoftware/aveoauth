@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:aveoauth/command/command.dart';
 import 'package:aveoauth/command/create/log_utils.dart';
-import 'package:aveoauth/command/create/menu.dart';
 import 'package:aveoauth/core/structure.dart';
 import 'package:aveoauth/functions/create/create_single_file.dart';
 import 'package:aveoauth/samples/otp_page.dart';
@@ -52,17 +51,12 @@ class CreatePageCommand extends Command {
     // Select the type of Authentication style
     LogService.info('Select which type of Authentication you want to create ?');
     echo('1. Login Lite (Email Login + Google and Facebook Login)\n');
-    echo('2. Login Plus(Email Login + All Social Login + Phone and Biometric Login)\n');
+    echo(
+        '2. Login Plus(Email Login + All Social Login + Phone and Biometric Login)\n');
     echo('3. Selective Login (Customizable)\n');
     int authenticationStyleResult = int.parse(stdin.readLineSync()!);
-    // Menu authenticationStyle = Menu([
-    //   'Login Lite (Email Login + Google and Facebook Login)',
-    //   'Login Plus(Email Login + All Social Login + Phone and Biometric Login)',
-    //   'Selective Login (Customizable)',
-    // ], title: 'Select which type of Authentication you want to create ?');
-    // final Answer authenticationStyleResult = authenticationStyle.choose();
 
-    if (authenticationStyleResult == 0) {
+    if (authenticationStyleResult == 1) {
       LogService.info('Login Lite Selected');
       // Login Lite
       isAppleLogin = false;
@@ -74,7 +68,7 @@ class CreatePageCommand extends Command {
       isPhoneLogin = false;
       isTwitterLogin = false;
       isSocialLoginButtonLableEnabled = false;
-    } else if (authenticationStyleResult == 1) {
+    } else if (authenticationStyleResult == 2) {
       LogService.info('Login Plus Selected');
       // Login Plus
       isAppleLogin = true;
@@ -87,188 +81,192 @@ class CreatePageCommand extends Command {
       isTwitterLogin = true;
       isSocialLoginButtonLableEnabled = false;
 
-      appleClientId =
-          ask('Enter Apple clientId', defaultValue: '', required: true);
-      appleRedirectUri =
-          ask('Enter Apple Redirect URL', defaultValue: '', required: true);
-      githubClientId =
-          ask('Enter Github clientId', defaultValue: '', required: true);
-      githubClientSecret =
-          ask('Enter Github clientSecret', defaultValue: '', required: true);
-      githubRedirectUrl =
-          ask('Enter Github redirectUrl', defaultValue: '', required: true);
-      twitterApiKey =
-          ask('Enter Twitter apiKey', defaultValue: '', required: true);
-      twitterApiSecretKey =
-          ask('Enter Twitter apiSecretKey', defaultValue: '', required: true);
-      twitterRedirectURI =
-          ask('Enter Twitter redirectURI', defaultValue: '', required: true);
-    } else {
+      LogService.info('Enter Apple clientId');
+      appleClientId = stdin.readLineSync()!.toString();
+      LogService.info('Enter Apple Redirect URL');
+      appleRedirectUri = stdin.readLineSync()!.toString();
+      LogService.info('Enter Github clientId');
+      githubClientId = stdin.readLineSync()!.toString();
+      LogService.info('Enter Github clientSecret');
+      githubClientSecret = stdin.readLineSync()!.toString();
+      LogService.info('Enter Github redirectUrl');
+      githubRedirectUrl = stdin.readLineSync()!.toString();
+      LogService.info('Enter Twitter apiKey');
+      twitterApiKey = stdin.readLineSync()!.toString();
+      LogService.info('Enter Twitter apiSecretKey');
+      twitterApiSecretKey = stdin.readLineSync()!.toString();
+      LogService.info('Enter Twitter redirectURI');
+      twitterRedirectURI = stdin.readLineSync()!.toString();
+    } else if (authenticationStyleResult == 3) {
       LogService.info('Custom Login Selected');
+
       // Selective Login
       LogService.divider();
 
       // Enable Apple Login
-      Menu appleLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Apple Login ?');
-      final appleLoginResult = appleLogin.choose();
-
-      if (appleLoginResult.index == 0) {
+      LogService.info('Need Apple Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int appleLoginResult = int.parse(stdin.readLineSync()!);
+      if (appleLoginResult == 1) {
         isAppleLogin = true;
-        appleClientId =
-            ask('Enter Apple clientId', defaultValue: '', required: true);
-        appleRedirectUri =
-            ask('Enter Apple Redirect URL', defaultValue: '', required: true);
-        LogService.success('Apple Login is enabled\n\n');
-      } else {
+        LogService.info('Enter Apple clientId');
+        appleClientId = stdin.readLineSync()!.toString();
+        LogService.info('Enter Apple Redirect URL');
+        appleRedirectUri = stdin.readLineSync()!.toString();
+        LogService.success('Apple Login is enabled');
+      } else if (appleLoginResult == 2) {
         isAppleLogin = false;
-        LogService.error('Apple Login is enabled\n\n');
+        LogService.error('Apple Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Biometric Login
-      Menu biometricLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Biometric Login ?');
-      final biometricLoginResult = biometricLogin.choose();
-
-      if (biometricLoginResult.index == 0) {
+      LogService.info('Need Biometric Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int biometricLoginResult = int.parse(stdin.readLineSync()!);
+      if (biometricLoginResult == 1) {
         isBiometricLogin = true;
-        LogService.success('Biometric Login is enabled\n\n');
-      } else {
+        LogService.success('Biometric Login is enabled');
+      } else if (biometricLoginResult == 2) {
         isBiometricLogin = false;
-        LogService.error('Biometric Login is disabled\n\n');
+        LogService.error('Biometric Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Facebook Login
-      Menu facebookLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Facebook Login ?');
-      final facebookLoginResult = facebookLogin.choose();
-
-      if (facebookLoginResult.index == 0) {
+      LogService.info('Need Facebook Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int facebookLoginResult = int.parse(stdin.readLineSync()!);
+      if (facebookLoginResult == 1) {
         isFacebookLogin = true;
-        LogService.success('Facebook Login is enabled\n\n');
-      } else {
+        LogService.success('Facebook Login is enabled');
+      } else if (facebookLoginResult == 2) {
         isFacebookLogin = false;
-        LogService.error('Facebook Login is disabled\n\n');
+        LogService.error('Facebook Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Firebase Email Login
-      Menu firebaseEmailLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Firebase Email Login ?');
-      final firebaseEmailLoginResult = firebaseEmailLogin.choose();
-
-      if (firebaseEmailLoginResult.index == 0) {
+      LogService.info('Need Firebase Email Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int firebaseEmailLoginResult = int.parse(stdin.readLineSync()!);
+      if (firebaseEmailLoginResult == 1) {
         isFirebaseEmailLogin = true;
-        LogService.success('Firebase Email Login is enabled\n\n');
-      } else {
+        LogService.success('Firebase Email Login is enabled');
+      } else if (firebaseEmailLoginResult == 2) {
         isFirebaseEmailLogin = false;
-        LogService.error('Firebase Email Login is disabled\n\n');
+        LogService.error('Firebase Email Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Github Login
-      Menu githubLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Github Login ?');
-      final githubLoginResult = githubLogin.choose();
-
-      if (githubLoginResult.index == 0) {
+      LogService.info('Need Github Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int githubLoginResult = int.parse(stdin.readLineSync()!);
+      if (githubLoginResult == 1) {
         isGithubLogin = true;
-        githubClientId =
-            ask('Enter Github clientId', defaultValue: '', required: true);
-        githubClientSecret =
-            ask('Enter Github clientSecret', defaultValue: '', required: true);
-        githubRedirectUrl =
-            ask('Enter Github redirectUrl', defaultValue: '', required: true);
-        LogService.success('Github Login is enabled\n\n');
-      } else {
+        LogService.info('Enter Github clientId');
+        githubClientId = stdin.readLineSync()!.toString();
+        LogService.info('Enter Github clientSecret');
+        githubClientSecret = stdin.readLineSync()!.toString();
+        LogService.info('Enter Github redirectUrl');
+        githubRedirectUrl = stdin.readLineSync()!.toString();
+        LogService.success('Github Login is enabled');
+      } else if (githubLoginResult == 2) {
         isGithubLogin = false;
-        LogService.error('Github Login is disabled\n\n');
+        LogService.error('Github Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Google Login
-      Menu googleLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Google Login ?');
-      final googleLoginResult = googleLogin.choose();
-
-      if (googleLoginResult.index == 0) {
+      LogService.info('Need Google Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int googleLoginResult = int.parse(stdin.readLineSync()!);
+      if (googleLoginResult == 1) {
         isGoogleLogin = true;
-        LogService.success('Google Login is enabled\n\n');
-      } else {
+        LogService.success('Google Login is enabled');
+      } else if (googleLoginResult == 2) {
         isGoogleLogin = false;
-        LogService.error('Google Login is disabled\n\n');
+        LogService.error('Google Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Phone Login
-      Menu phoneLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Phone Login ?');
-      final phoneLoginResult = phoneLogin.choose();
-
-      if (phoneLoginResult.index == 0) {
+      LogService.info('Need Phone Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int phoneLoginResult = int.parse(stdin.readLineSync()!);
+      if (phoneLoginResult == 1) {
         isPhoneLogin = true;
-        LogService.success('Phone Login is enabled\n\n');
-      } else {
+        LogService.success('Phone Login is enabled');
+      } else if (phoneLoginResult == 2) {
         isPhoneLogin = false;
-        LogService.error('Phone Login is disabled\n\n');
+        LogService.error('Phone Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Twitter Login
-      Menu twitterLogin = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need Twitter Login ?');
-      final twitterLoginResult = twitterLogin.choose();
-
-      if (twitterLoginResult.index == 0) {
+      LogService.info('Need Twitter Login ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int twitterLoginResult = int.parse(stdin.readLineSync()!);
+      if (twitterLoginResult == 1) {
         isTwitterLogin = true;
-        twitterApiKey =
-            ask('Enter Twitter apiKey', defaultValue: '', required: true);
-        twitterApiSecretKey =
-            ask('Enter Twitter apiSecretKey', defaultValue: '', required: true);
-        twitterRedirectURI =
-            ask('Enter Twitter redirectURI', defaultValue: '', required: true);
-        LogService.success('Twitter Login is enabled\n\n');
-      } else {
+        LogService.info('Enter Twitter apiKey');
+        twitterApiKey = stdin.readLineSync()!.toString();
+        LogService.info('Enter Twitter apiSecretKey');
+        twitterApiSecretKey = stdin.readLineSync()!.toString();
+        LogService.info('Enter Twitter redirectURI');
+        twitterRedirectURI = stdin.readLineSync()!.toString();
+        LogService.success('Twitter Login is enabled');
+      } else if (twitterLoginResult == 2) {
         isTwitterLogin = false;
-        LogService.error('Twitter Login is disabled\n\n');
+        LogService.error('Twitter Login is disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
 
       // Enable Label for social login button
-      Menu socialLoginButtonLableEnabled = Menu([
-        'Yes',
-        'No',
-      ], title: 'Need label enabled Social Login Buttons ?');
-      final socialLoginButtonLableEnabledResult =
-          socialLoginButtonLableEnabled.choose();
-
-      if (socialLoginButtonLableEnabledResult.index == 0) {
+      LogService.info('Need label enabled Social Login Buttons ?');
+      echo('1. Yes\n');
+      echo('2. No\n');
+      int socialLoginButtonLableEnabledResult =
+          int.parse(stdin.readLineSync()!);
+      if (socialLoginButtonLableEnabledResult == 1) {
         isSocialLoginButtonLableEnabled = true;
-        LogService.success('Social Login Buttons label enabled\n\n');
-      } else {
+        LogService.success('Social Login Buttons label enabled');
+      } else if (socialLoginButtonLableEnabledResult == 2) {
         isSocialLoginButtonLableEnabled = false;
-        LogService.error('Social Login Buttons label disabled\n\n');
+        LogService.error('Social Login Buttons label disabled');
+      } else {
+        LogService.error('Invalid selection');
       }
       LogService.divider();
+    } else {
+      LogService.error('Invalid selection\n');
     }
+
     var fileModel =
         Structure.model(name, 'page', true, on: onCommand, folderName: name);
     var pathSplit = Structure.safeSplitPath(fileModel.path!);
