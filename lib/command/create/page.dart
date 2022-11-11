@@ -54,7 +54,7 @@ class CreatePageCommand extends Command {
       'Login Lite (Email Login + Google and Facebook Login)',
       'Login Plus(Email Login + All Social Login + Phone and Biometric Login)',
       'Selective Login (Customizable)',
-    ], title: 'Select which type of Authentication you want to create ?', defaultValue: 2);
+    ], title: 'Select which type of Authentication you want to create ?');
     final Answer authenticationStyleResult = authenticationStyle.choose();
 
     if (authenticationStyleResult.index == 0) {
