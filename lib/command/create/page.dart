@@ -49,17 +49,20 @@ class CreatePageCommand extends Command {
 
     LogService.divider();
     echo('\n');
-    echo("Enter number");
-    int? n1 = int.parse(stdin.readLineSync()!);
     // Select the type of Authentication style
-    Menu authenticationStyle = Menu([
-      'Login Lite (Email Login + Google and Facebook Login)',
-      'Login Plus(Email Login + All Social Login + Phone and Biometric Login)',
-      'Selective Login (Customizable)',
-    ], title: 'Select which type of Authentication you want to create ?');
-    final Answer authenticationStyleResult = authenticationStyle.choose();
+    LogService.info('Select which type of Authentication you want to create ?');
+    echo('1. Login Lite (Email Login + Google and Facebook Login)\n');
+    echo('2. Login Plus(Email Login + All Social Login + Phone and Biometric Login)\n');
+    echo('3. Selective Login (Customizable)\n');
+    int authenticationStyleResult = int.parse(stdin.readLineSync()!);
+    // Menu authenticationStyle = Menu([
+    //   'Login Lite (Email Login + Google and Facebook Login)',
+    //   'Login Plus(Email Login + All Social Login + Phone and Biometric Login)',
+    //   'Selective Login (Customizable)',
+    // ], title: 'Select which type of Authentication you want to create ?');
+    // final Answer authenticationStyleResult = authenticationStyle.choose();
 
-    if (authenticationStyleResult.index == 0) {
+    if (authenticationStyleResult == 0) {
       LogService.info('Login Lite Selected');
       // Login Lite
       isAppleLogin = false;
@@ -71,7 +74,7 @@ class CreatePageCommand extends Command {
       isPhoneLogin = false;
       isTwitterLogin = false;
       isSocialLoginButtonLableEnabled = false;
-    } else if (authenticationStyleResult.index == 1) {
+    } else if (authenticationStyleResult == 1) {
       LogService.info('Login Plus Selected');
       // Login Plus
       isAppleLogin = true;
