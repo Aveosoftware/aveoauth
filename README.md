@@ -9,9 +9,11 @@
   - [Configuration for Google Login for Android](#configuration-for-google-login-for-android)
   - [Configuration for Google Login for IOS](#configuration-for-google-login-for-ios)
   - [Usage](#usage-1)
+  - [Screenshot](#screenshot)
 - [Github Login](#github-login)
   - [Configuration for Github Login](#configuration-for-github-login)
   - [Usage](#usage-2)
+  - [Screenshot](#screenshot-1)
 - [Apple Login](#apple-login)
   - [Configuration for Apple Login](#configuration-for-apple-login)
     - [Register an App ID](#register-an-app-id)
@@ -21,27 +23,33 @@
       - [Example](#example)
       - [Your App](#your-app)
   - [Usage](#usage-3)
+  - [Screenshot](#screenshot-2)
 - [Facebook Login](#facebook-login)
   - [Configuration for Facebook Login on Android](#configuration-for-facebook-login-on-android)
   - [Configuration for Facebook Login on IOS](#configuration-for-facebook-login-on-ios)
   - [Usage](#usage-4)
+  - [Screenshot](#screenshot-3)
 - [Twitter Login](#twitter-login)
   - [Configuration for Twitter Login](#configuration-for-twitter-login)
   - [Usage](#usage-5)
+  - [Screenshot](#screenshot-4)
 - [Phone Login](#phone-login)
   - [Configuration for Phone Login Android](#configuration-for-phone-login-android)
   - [Configuration for Phone Login IOS](#configuration-for-phone-login-ios)
   - [Usage](#usage-6)
+  - [Screenshot](#screenshot-5)
 - [Firebase-Email Login](#firebase-email-login)
   - [Configuration for Firebase-Email Login](#configuration-for-firebase-email-login)
   - [Usage](#usage-7)
     - [Sign-up to Firebase Email Login](#sign-up-to-firebase-email-login)
     - [Sign-in to Firebase Email Login](#sign-in-to-firebase-email-login)
     - [Reset password for Firebase Email Login](#reset-password-for-firebase-email-login)
+  - [Screenshot](#screenshot-6)
 - [Biometric Login](#biometric-login)
   - [Configuration for Biometric Login for Android](#configuration-for-biometric-login-for-android)
   - [Configuration for Biometric Login for IOS](#configuration-for-biometric-login-for-ios)
   - [Usage](#usage-8)
+  - [Screenshot](#screenshot-7)
 
 ## Platform Support
 
@@ -195,7 +203,8 @@ Widget  build(BuildContext  context) {
             ]);
     }
 ```
-
+## Screenshot
+![Google](images/google_snap.png)
 # Github Login
 
 ## Configuration for Github Login
@@ -245,6 +254,8 @@ Widget  build(BuildContext  context) {
             ]);
 }
 ```
+## Screenshot
+![Github](images/github_snap.png)
 # Apple Login
 
 ## Configuration for Apple Login
@@ -411,7 +422,9 @@ Widget  build(BuildContext  context) {
             ]);
 }
 ```
-
+## Screenshot
+![Apple](images/apple_email_snap.png)
+![Apple](images/apple_password_snap.png)
 # Facebook Login
 
 ## Configuration for Facebook Login on Android
@@ -546,7 +559,8 @@ Widget  build(BuildContext  context) {
             );
 }
 ```
-
+## Screenshot
+![Facebook](images/facebook_snap.png)
 # Twitter Login
 
 ## Configuration for Twitter Login
@@ -603,6 +617,8 @@ Widget  build(BuildContext  context) {
             ),
 }
 ```
+## Screenshot
+![Twitter](images/twitter_snap.png)
 
 # Phone Login
 
@@ -673,7 +689,9 @@ Widget  build(BuildContext  context) {
             ),
 }
 ```
-
+## Screenshot
+![Reset](images/verify_phone_snap.png)
+![Reset](images/otp_snap.png)
 # Firebase-Email Login
 
 ## Configuration for Firebase-Email Login
@@ -775,6 +793,10 @@ Widget  build(BuildContext  context) {
                 ),
 }
 ```
+## Screenshot
+![Login](images/login_snap.png)
+![Signup](images/signup_snap.png)
+![Reset](images/reset_snap.png)
 # Biometric Login
 
 ## Configuration for Biometric Login for Android
@@ -825,3 +847,5 @@ Widget  build(BuildContext  context) {
 	);
 }
 ```
+## Screenshot
+![Biometric](images/biometric_snap.png)
