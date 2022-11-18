@@ -365,6 +365,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message, cred) {
+                                  // TODO: Add google login success logic here
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
