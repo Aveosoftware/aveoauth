@@ -113,6 +113,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                               isLabelVisible: false,
                               onPressed: () => signInWithBiometric(
                                   onSuccess: (message) {
+                                    // TODO: Add success logic here
                                     snackBar(message, context);
                                   },
                                   onError: (error) {
@@ -274,6 +275,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                           setState(() {
                                             isSignUpMode = false;
                                           });
+                                          // TODO: Add success logic here
                                         },
                                         onError: (error) {
                                           snackBar(error, context);
@@ -290,6 +292,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                         onSuccess: (message, cred) {
                                           snackBar(message, context);
                                           FocusScope.of(context).unfocus();
+                                          // TODO: Add success logic here
                                         },
                                         onError: (error) {
                                           snackBar(error, context);
@@ -365,7 +368,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             onPressed: () => signInWithGoogle(
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message, cred) {
-                                  // TODO: Add google login success logic here
+                                  // TODO: Add success logic here
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -380,6 +383,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                               onPressed: () => signInWithFacebook(
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message ,cred) {
+                                    // TODO: Add success logic here
                                     snackBar(message, context);
                                   },
                                   onError: (error) {
@@ -395,6 +399,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 clientId:'$appleClientId',
                                 redirectUri:'$appleRedirectUri',
                                 onSuccess: (message, cred) {
+                                  // TODO: Add success logic here
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -415,6 +420,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                     '$githubRedirectUrl',
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message,cred) {
+                                  // TODO: Add success logic here
                                   snackBar(message, context);
                                 },
                                 onError: (error) {
@@ -434,6 +440,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 redirectURI: '$twitterRedirectURI',
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message,cred) {
+                                  // TODO: Add success logic here
                                   snackBar(message, context);
                                 },
                                 onError: (error) {

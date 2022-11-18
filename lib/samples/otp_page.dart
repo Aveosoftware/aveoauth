@@ -150,6 +150,7 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
                     smsCode: otpCodeController.text,
                     firebaseInstance: FirebaseAuth.instance,
                     onSuccess: (message,cred) {
+                      // TODO: Add success logic here
                       snackBar(message, context);
                     },
                     onError: (error) {
