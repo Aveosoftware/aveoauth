@@ -1,7 +1,10 @@
 # Aveo Authentication
-
+AveoAuth provides a comprehensive solution for authenticating users in your app. It supports a variety of authentication methods, including email and password, phone number, and popular third-party services like Google, Facebook, Twitter, Github and Apple. With this package, you can easily integrate multiple authentication methods into your app, allowing users to choose the one that works best for them. This package is easy to use and highly customizable, so you can tailor it to fit the specific needs of your app. It also comes with detailed documentation and examples to help you get started quickly.
 - [Aveo Authentication](#aveo-authentication)
+  - [Where Aveoauth can be used ?](#where-aveoauth-can-be-used-)
+  - [Why to choose Aveoauth ?](#why-to-choose-aveoauth-)
   - [Platform Support](#platform-support)
+  - [Estimated saved time](#estimated-saved-time)
   - [Configration](#configration)
   - [Usage](#usage)
     - [General utility](#general-utility)
@@ -51,14 +54,35 @@
   - [Usage](#usage-8)
   - [Screenshot](#screenshot-7)
 
+## Where Aveoauth can be used ?
+- We can be used in any kind of app that requires users to log in or sign up.
+- This could include social media apps, messaging apps, gaming apps, e-commerce apps, and many other types of apps.
+- It can also be useful for apps that need to authenticate users in order to access certain features or content.
+
+## Why to choose Aveoauth ?
+- Less development time required to build the full fledged infrastructure for authentication.
+- Highly customizable UI due to code generation in targeted project
+- Highly descriptive documentation
+- Can be used in any kind of application irrespective of architecture and code pattern used.
 ## Platform Support
 
 | Android | iOS | MacOS | Web | Linux | Windows |
-
-| :----: | :-----: | :-: | :---: | :-: | :---: | :-----: |
-
+|----|----|----|----|----|----|
 | Login from | &check; | &check; | &cross; | &cross; | &cross; | &cross; |
 
+## Estimated saved time 
+|Login Name|Original Time taken (hrs)|Time taken using module (hrs)|Saved time (hrs)|
+|---|---|---|---|
+|Google Login         | 4 |  0.5 | 3.5 |
+|Github Login         | 4 |  0.5 | 3.5 |
+|Apple Login          | 8 |  0.75 | 7.25 |
+|Facebook Login       | 4 |  0.5 | 3.5 |
+|Twitter Login        | 4 |  0.5 | 3.5 |
+|Phone Login          | 6 |  0.5 | 5.5 |
+|Firebase-Email Login | 6 |  0.5 | 5.5 |
+|Biometric Login      | 4 |  0.5 | 3.5 |
+|||||
+|Total                | 40 |  4.25 | 35.75 |
 ## Configration
 Add the following to `android/app/build`.gradle:
 ```gradle
