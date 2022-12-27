@@ -16,7 +16,7 @@ import 'package:logger/logger.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:twitter_login/entity/auth_result.dart';
 import 'package:twitter_login/twitter_login.dart';
-import 'package:sms_autofill/sms_autofill.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 part 'authentication/apple_login.dart';
 part 'authentication/biometric_login.dart';
@@ -33,4 +33,3 @@ part 'utils/exception_handling_helper.dart';
 part 'utils/logger.dart';
 part 'utils/logout_helper.dart';
 part 'utils/validators.dart';
-part 'utils/auto_fill.dart';
