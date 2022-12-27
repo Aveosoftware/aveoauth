@@ -1,14 +1,14 @@
 part of '../aveoauth.dart';
 
 
-class CustomPinFiled extends StatelessWidget {
+class CustomPinField extends StatelessWidget {
   final BuildContext context;
   final void Function(String) onChanged;
   final TextEditingController? textEditingController;
   final StreamController<ErrorAnimationType>? errorController;
   final void Function(String)? onCompleted;
   final bool Function(String?)? beforeTextPaste;
-  const CustomPinFiled(
+  const CustomPinField(
       {super.key,
       required this.context,
       required this.onChanged,
