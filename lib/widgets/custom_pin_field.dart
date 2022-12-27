@@ -1,6 +1,5 @@
 part of '../aveoauth.dart';
 
-
 class CustomPinField extends StatelessWidget {
   final BuildContext context;
   final void Function(String) onChanged;
@@ -29,10 +28,13 @@ class CustomPinField extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         fieldHeight: 50,
         fieldWidth: 40,
-        activeFillColor: Colors.green,
+        selectedColor: Theme.of(context).colorScheme.primary,
+        selectedFillColor: Theme.of(context).colorScheme.primary,
+        inactiveColor: Colors.grey,
+        inactiveFillColor: Colors.grey,
       ),
       animationDuration: const Duration(milliseconds: 300),
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.transparent,
       enableActiveFill: true,
       errorAnimationController: errorController,
       controller: textEditingController,

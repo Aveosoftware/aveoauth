@@ -13,6 +13,7 @@ mixin GithubLogin {
       required ErrorCallback onError}) async {
     // Trigger the authentication flow
     try {
+      showLoader();
       // Create a GitHubSignIn instance
       final GitHubSignIn gitHubSignIn = GitHubSignIn(
           clientId: clientId,
@@ -26,7 +27,6 @@ mixin GithubLogin {
         final githubAuthCredential =
             GithubAuthProvider.credential(result.token!);
         try {
-          showLoader();
           UserCredential userCredential =
               await firebaseInstance.signInWithCredential(githubAuthCredential);
           Mode().changeLoginMode = LoginMode.github;

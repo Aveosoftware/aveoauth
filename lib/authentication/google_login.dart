@@ -9,6 +9,7 @@ mixin GoogleLogin {
       required ErrorCallback onError}) async {
     // Trigger the authentication flow
     try {
+      showLoader();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser != null) {
         // Obtain the auth details from the request
@@ -20,7 +21,6 @@ mixin GoogleLogin {
           idToken: googleAuth.idToken,
         );
         try {
-          showLoader();
           UserCredential userCredential =
               await firebaseInstance.signInWithCredential(credential);
           Mode().changeLoginMode = LoginMode.google;
