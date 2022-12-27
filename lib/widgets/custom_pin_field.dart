@@ -33,6 +33,7 @@ class CustomPinField extends StatelessWidget {
         inactiveColor: Colors.grey,
         inactiveFillColor: Colors.grey,
       ),
+      keyboardType: TextInputType.number,
       animationDuration: const Duration(milliseconds: 300),
       backgroundColor: Colors.transparent,
       enableActiveFill: true,
