@@ -1,5 +1,6 @@
 library auth;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
@@ -13,10 +14,10 @@ import 'package:github_sign_in/github_sign_in.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:twitter_login/entity/auth_result.dart';
 import 'package:twitter_login/twitter_login.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 part 'authentication/apple_login.dart';
 part 'authentication/biometric_login.dart';
@@ -33,3 +34,4 @@ part 'utils/exception_handling_helper.dart';
 part 'utils/logger.dart';
 part 'utils/logout_helper.dart';
 part 'utils/validators.dart';
+part 'widgets/custom_pin_field.dart';
