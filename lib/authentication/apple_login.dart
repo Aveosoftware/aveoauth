@@ -19,7 +19,9 @@ mixin AppleLogin {
   }
 
   signInWithApple(
-      {required FirebaseAuth firebaseInstance,
+      {required Function showLoader,
+      required Function hideLoader,
+      required FirebaseAuth firebaseInstance,
       required String clientId,
       required String redirectUri,
       required SussessCallback onSuccess,
@@ -44,8 +46,7 @@ mixin AppleLogin {
           clientId: clientId,
           // redirectUri: Uri.parse(
           //     "https://navy-hospitable-beast.glitch.me/callbacks/sign_in_with_apple"),
-          redirectUri: Uri.parse(
-              redirectUri),
+          redirectUri: Uri.parse(redirectUri),
         ),
       );
       logger.i("Apple Identifier Token: ${appleCredential.identityToken}");
@@ -62,15 +63,19 @@ mixin AppleLogin {
             await firebaseInstance.signInWithCredential(credential);
         logger.i("Apple Firebase User Credential: $userCredential");
         Mode().changeLoginMode = LoginMode.apple;
+        hideLoader();
         onSuccess(
-            '${userCredential.user?.displayName ?? ''} Logged in successfully',userCredential);
+            '${userCredential.user?.displayName ?? ''} Logged in successfully',
+            userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         logger.e("Apple Error", errorMessage);
+        hideLoader();
         onError(errorMessage);
       }
     } catch (error) {
       logger.e("Apple Error", error.toString());
+      hideLoader();
       onError('Something went wrong');
     }
   }

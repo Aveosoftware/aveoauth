@@ -2,7 +2,9 @@ part of '../aveoauth.dart';
 
 mixin TwitterSocialLogin {
   signInWithTwitter(
-      {required FirebaseAuth firebaseInstance,
+      {required Function showLoader,
+      required Function hideLoader,
+      required FirebaseAuth firebaseInstance,
       required BuildContext context,
       required String apiKey,
       required String apiSecretKey,
@@ -11,6 +13,7 @@ mixin TwitterSocialLogin {
       required ErrorCallback onError}) async {
     // Trigger the authentication flow
     try {
+      showLoader();
       // Create a TwitterSignIn instance
       final TwitterLogin twitterLogin = TwitterLogin(
         apiKey: apiKey,
@@ -31,18 +34,22 @@ mixin TwitterSocialLogin {
           UserCredential userCredential = await firebaseInstance
               .signInWithCredential(twitterAuthCredential);
           Mode().changeLoginMode = LoginMode.twitter;
+          hideLoader();
           onSuccess(
               '${userCredential.user?.displayName ?? ''} Logged in successfully',
               userCredential);
         } on FirebaseAuthException catch (e) {
           String errorMessage = ExceptionHandlingHelper.handleException(e.code);
+          hideLoader();
           onError(errorMessage);
         }
       } else if (result.status == TwitterLoginStatus.cancelledByUser) {
         logger.e("Twitter Login Error", result.errorMessage);
+        hideLoader();
         onError('Twitter Signup/Login cancelled');
       } else {
         logger.e("Twitter Login Error", result.errorMessage);
+        hideLoader();
         onError('Something went wrong');
       }
     } catch (error) {

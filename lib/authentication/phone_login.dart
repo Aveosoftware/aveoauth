@@ -6,23 +6,30 @@ typedef PhoneCodeSent = void Function(
 );
 mixin PhoneLogin {
   verifyPhoneNumber(
-      {required FirebaseAuth firebaseInstance,
+      {required Function showLoader,
+      required Function hideLoader,
+      required FirebaseAuth firebaseInstance,
       required PhoneSussessCallback onSuccess,
       required ErrorCallback onError,
       required String phoneNumber,
       required PhoneCodeSent codeSent}) async {
     try {
+      showLoader();
       await firebaseInstance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential userCredential) async {
-          await firebaseInstance
-              .signInWithCredential(userCredential)
-              .then((value) => {onSuccess('Opt sent successfully',userCredential)});
+          await firebaseInstance.signInWithCredential(userCredential).then(
+              (value) => {
+                    hideLoader(),
+                    onSuccess('Opt sent successfully', userCredential)
+                  });
         },
         verificationFailed: (FirebaseAuthException e) {
+          hideLoader();
           onError(e.message ?? 'Phone number verification failed');
           if (e.code == 'invalid-phone-number') {
-            logger.e("Phone Login Error",'The provided phone number is not valid.');
+            logger.e(
+                "Phone Login Error", 'The provided phone number is not valid.');
           }
         },
         codeSent: codeSent,
@@ -31,13 +38,16 @@ mixin PhoneLogin {
         },
       );
     } catch (error) {
+      hideLoader();
       onError(e.toString());
-      logger.e("Phone Login Error",error.toString());
+      logger.e("Phone Login Error", error.toString());
     }
   }
 
   signInWithPhone(
-      {required FirebaseAuth firebaseInstance,
+      {required Function showLoader,
+      required Function hideLoader,
+      required FirebaseAuth firebaseInstance,
       required PhoneSussessCallback onSuccess,
       required ErrorCallback onError,
       required String smsCode,
@@ -47,13 +57,16 @@ mixin PhoneLogin {
         verificationId: verificationId, smsCode: smsCode);
     // Trigger the authentication flow
     try {
+      showLoader();
       await firebaseInstance.signInWithCredential(credential).then((value) => {
-            onSuccess('$phoneNumber Logged in successfully',credential),
+            hideLoader(),
+            onSuccess('$phoneNumber Logged in successfully', credential),
             Mode().changeLoginMode = LoginMode.phone,
           });
     } catch (e) {
+      hideLoader();
       onError(e.toString());
-      logger.e("Phone Login Error",e.toString());
+      logger.e("Phone Login Error", e.toString());
     }
   }
 
