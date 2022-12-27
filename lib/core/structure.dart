@@ -9,6 +9,7 @@ class Structure {
   static final Map<String, String> _paths = {
     'page': replaceAsExpected(path: 'lib/'),
     'social_login_button': replaceAsExpected(path: 'lib/'),
+    'loader': replaceAsExpected(path: 'lib/'),
     'text_field': replaceAsExpected(path: 'lib/'),
     'verify_phone': replaceAsExpected(path: 'lib/'),
     'otp_page': replaceAsExpected(path: 'lib/'),
