@@ -2,7 +2,9 @@ part of '../aveoauth.dart';
 
 mixin GithubLogin {
   signInWithGithub(
-      {required FirebaseAuth firebaseInstance,
+      {required Function showLoader,
+      required Function hideLoader,
+      required FirebaseAuth firebaseInstance,
       required BuildContext context,
       required String clientId,
       required String clientSecret,
@@ -11,6 +13,7 @@ mixin GithubLogin {
       required ErrorCallback onError}) async {
     // Trigger the authentication flow
     try {
+      showLoader();
       // Create a GitHubSignIn instance
       final GitHubSignIn gitHubSignIn = GitHubSignIn(
           clientId: clientId,
@@ -27,26 +30,32 @@ mixin GithubLogin {
           UserCredential userCredential =
               await firebaseInstance.signInWithCredential(githubAuthCredential);
           Mode().changeLoginMode = LoginMode.github;
+          hideLoader();
           onSuccess(
               '${userCredential.user?.displayName ?? ''} Logged in successfully',
               userCredential);
         } on FirebaseAuthException catch (e) {
           String errorMessage = ExceptionHandlingHelper.handleException(e.code);
           logger.e("Github Error", errorMessage);
+          hideLoader();
           onError(errorMessage);
         }
-      } else if(result.status == GitHubSignInResultStatus.cancelled) {
+      } else if (result.status == GitHubSignInResultStatus.cancelled) {
         logger.e("Github Login Error", result.errorMessage);
+        hideLoader();
         onError('Github Signup/Login cancelled');
-      } else{
+      } else {
         logger.e("Github Login Error", result.errorMessage);
+        hideLoader();
         onError('Something went wrong');
       }
     } on PlatformException catch (e) {
       logger.e("Github Platform Exception", e.toString());
+      hideLoader();
       onError('Something went wrong');
     } catch (error) {
       logger.e("Github Error", error.toString());
+      hideLoader();
       onError('Something went wrong');
     }
   }

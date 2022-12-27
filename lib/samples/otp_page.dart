@@ -59,7 +59,10 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: Form(
+        body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height * 0.75,
+          child: Form(
           key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -162,6 +165,8 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
             ],
           ),
         ),
+      ),
+      ),
     );
   }
 }

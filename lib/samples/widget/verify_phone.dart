@@ -43,7 +43,7 @@ class _VerifyPhoneState extends State<VerifyPhone>
         appBar: AppBar(),
         body: SingleChildScrollView(
           child: SizedBox(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * 0.75,
             child: Form(
               key: formKey,
               child: Column(

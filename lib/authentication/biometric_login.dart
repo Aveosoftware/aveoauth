@@ -32,7 +32,9 @@ mixin BiometricLogin {
   }
 
   signInWithBiometric(
-      {required GeneralSussessCallback onSuccess,
+      {required Function showLoader,
+      required Function hideLoader,
+      required GeneralSussessCallback onSuccess,
       required ErrorCallback onError,
       required AuthCallback isBiometricAvailable}) async {
     final isAvailable = await hasBiometrics();
@@ -43,6 +45,7 @@ mixin BiometricLogin {
     }
 
     try {
+      showLoader();
       await _auth.authenticate(
         options: const AuthenticationOptions(
           biometricOnly: true,
@@ -52,11 +55,15 @@ mixin BiometricLogin {
         localizedReason: 'Scan Fingerprint to Authenticate',
       );
       Mode().changeLoginMode = LoginMode.biometric;
+      hideLoader();
       onSuccess('Logged in successfully');
     } on PlatformException catch (e) {
+      hideLoader();
       onError(e.message ?? 'Error while logging in');
       logger.e("Biometric Platform Exception", e.toString());
     } catch (e) {
+      hideLoader();
+      onError('Error while logging in');
       logger.e("Biometric Error", e.toString());
     }
   }
