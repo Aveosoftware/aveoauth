@@ -40,23 +40,29 @@ mixin FacebookLogin {
           onError('Something went wrong');
         }
       } else if (loginResult.status == LoginStatus.cancelled) {
-        if (enableLoader) {}
-        hideLoader(context);
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onError('Facebook Signup/Login cancelled');
       } else if (loginResult.status == LoginStatus.operationInProgress) {
       } else {
         logger.e("Facebook Login Message", loginResult.message);
-        if (enableLoader) {}
-        hideLoader(context);
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onError('Something went wrong');
       }
     } on PlatformException catch (e) {
       logger.e("Facebook Platform Exception", e.toString());
-      hideLoader(context);
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError('Something went wrong');
     } catch (e) {
       logger.e("Facebook Error", e.toString());
-      hideLoader(context);
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError('Something went wrong');
     }
   }

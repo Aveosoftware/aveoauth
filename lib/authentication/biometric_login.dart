@@ -56,12 +56,14 @@ mixin BiometricLogin {
         localizedReason: 'Scan Fingerprint to Authenticate',
       );
       Mode().changeLoginMode = LoginMode.biometric;
-      if (enableLoader) {}
-      hideLoader(context);
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onSuccess('Logged in successfully');
     } on PlatformException catch (e) {
-      if (enableLoader) {}
-      hideLoader(context);
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(e.message ?? 'Error while logging in');
       logger.e("Biometric Platform Exception", e.toString());
     } catch (e) {
