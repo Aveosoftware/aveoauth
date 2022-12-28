@@ -13,7 +13,6 @@ class CustomOtpPageSample extends Sample {
 import 'package:aveoauth/aveoauth.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_snackbar.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_social_login_button.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // TODO: Add imports
@@ -41,11 +40,18 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
   @override
   void initState() {
     verificationID = widget.verificationID;
+    generateSignature();
+    registerAutofillListen();
     super.initState();
+  }
+
+  generateSignature() async {
+    print(await generateAutoFillSignature());
   }
 
   @override
   void dispose() {
+    unRegisterAutofillListen();
     super.dispose();
   }
 
@@ -103,7 +109,7 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
               Padding(
                 padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 15, bottom: 0),
-                child: CustomPinField(textEditingController: otpCodeController, context:context, onChanged: (v){},),
+                child: PinField(controller: otpCodeController, currentCode: ''),
               ),
               const Padding(
                 padding: EdgeInsets.only(top: 10.0),
@@ -115,12 +121,6 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
               TextButton(
                 onPressed: () {
                   verifyPhoneNumber(
-                      showLoader: () {
-                        showLoaderDialog(context);
-                      },
-                      hideLoader: () {
-                        hideLoaderDialog(context);
-                      },
                       phoneNumber: widget.phoneNumber,
                       firebaseInstance: FirebaseAuth.instance,
                       onSuccess: (message,cred) {
@@ -150,12 +150,6 @@ class _OtpLoginPageState extends State<OtpLoginPage> with PhoneLogin {
                 text: 'SIGN IN',
                 isImageVisible: false,
                 onPressed: () => signInWithPhone(
-                    showLoader: () {
-                      showLoaderDialog(context);
-                    },
-                    hideLoader: () {
-                      hideLoaderDialog(context);
-                    },
                     phoneNumber: widget.phoneNumber,
                     smsCode: otpCodeController.text,
                     firebaseInstance: FirebaseAuth.instance,
