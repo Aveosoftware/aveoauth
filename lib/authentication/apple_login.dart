@@ -18,9 +18,8 @@ mixin AppleLogin {
     return digest.toString();
   }
 
-  signInWithApple(
-      {required Function showLoader,
-      required Function hideLoader,
+  signInWithApple(BuildContext context,
+      {bool enableLoader = true,
       required FirebaseAuth firebaseInstance,
       required String clientId,
       required String redirectUri,
@@ -33,6 +32,9 @@ mixin AppleLogin {
     final String rawNonce = generateNonce();
     final String nonce = sha256ofString(rawNonce);
     try {
+      if (enableLoader) {
+        showLoader(context);
+      }
       // Request credential for the currently signed in Apple account.
       final AuthorizationCredentialAppleID appleCredential =
           await SignInWithApple.getAppleIDCredential(
@@ -63,19 +65,25 @@ mixin AppleLogin {
             await firebaseInstance.signInWithCredential(credential);
         logger.i("Apple Firebase User Credential: $userCredential");
         Mode().changeLoginMode = LoginMode.apple;
-        hideLoader();
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onSuccess(
             '${userCredential.user?.displayName ?? ''} Logged in successfully',
             userCredential);
       } on FirebaseAuthException catch (e) {
         String errorMessage = ExceptionHandlingHelper.handleException(e.code);
         logger.e("Apple Error", errorMessage);
-        hideLoader();
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onError(errorMessage);
       }
     } catch (error) {
       logger.e("Apple Error", error.toString());
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError('Something went wrong');
     }
   }

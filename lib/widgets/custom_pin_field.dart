@@ -23,6 +23,7 @@ class CustomPinField extends StatelessWidget {
       length: 6,
       obscureText: false,
       animationType: AnimationType.fade,
+      keyboardType: TextInputType.number,
       pinTheme: PinTheme(
         shape: PinCodeFieldShape.box,
         borderRadius: BorderRadius.circular(5),

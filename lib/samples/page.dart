@@ -45,6 +45,7 @@ class PageSample extends Sample {
   }) : super(path);
 
   String get import => '''
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:aveoauth/aveoauth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -113,6 +114,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                               text: 'Biometric Login',
                               isLabelVisible: false,
                               onPressed: () => signInWithBiometric(
+                                  context,
                                   onSuccess: (message) {
                                     // TODO: Add success logic here
                                     snackBar(message, context);
@@ -249,6 +251,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             if (formKey.currentState!.validate())
                               {
                                 resetPasswordWithFirebaseEmail(
+                                  context,
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message) {
                                     snackBar(message, context);
@@ -269,6 +272,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 if (formKey.currentState!.validate())
                                   {
                                     signUpWithFirebaseEmail(
+                                        context,
                                         firebaseInstance: FirebaseAuth.instance,
                                         onSuccess: (message,cred) {
                                           snackBar(message, context);
@@ -289,6 +293,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 if (formKey.currentState!.validate())
                                   {
                                     signInWithFirebaseEmail(
+                                        context,
                                         firebaseInstance: FirebaseAuth.instance,
                                         onSuccess: (message, cred) {
                                           snackBar(message, context);
@@ -367,6 +372,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 "https://img.icons8.com/color/96/000000/google-logo.png",
                             text: 'Google Login',
                             onPressed: () => signInWithGoogle(
+                                context,
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message, cred) {
                                   // TODO: Add success logic here
@@ -382,6 +388,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   "https://www.facebook.com/images/fb_icon_325x325.png",
                               text: 'Facebook Login',
                               onPressed: () => signInWithFacebook(
+                                  context,
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message ,cred) {
                                     // TODO: Add success logic here
@@ -390,12 +397,15 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   onError: (error) {
                                     snackBar(error, context);
                                   })),''' : ''}
-                          ${isAppleLogin ? '''CustomButton(
+                          ${isAppleLogin ? '''
+                            if (Platform.isIOS)
+                            CustomButton(
                             isLabelVisible: $isSocialLoginButtonLableEnabled,
                             logoUrl:
                                 "https://img.icons8.com/ios-glyphs/344/mac-os.png",
                             text: 'Apple Login',
                             onPressed: () => signInWithApple(
+                                context,
                                 firebaseInstance: FirebaseAuth.instance,
                                 clientId:'$appleClientId',
                                 redirectUri:'$appleRedirectUri',
@@ -413,7 +423,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 "https://img.icons8.com/glyph-neue/344/github.png",
                             text: 'Github Login',
                             onPressed: () => signInWithGithub(
-                                context: context,
+                                context,
                                 clientId: '$githubClientId',
                                 clientSecret:
                                     '$githubClientSecret',
@@ -434,7 +444,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 "https://img.icons8.com/color/344/twitter--v1.png",
                             text: 'Twitter Login',
                             onPressed: () => signInWithTwitter(
-                                context: context,
+                                context,
                                 apiKey: '$twitterApiKey',
                                 apiSecretKey:
                                     '$twitterApiSecretKey',

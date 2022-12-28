@@ -97,6 +97,7 @@ class _VerifyPhoneState extends State<VerifyPhone>
                             if (formKey.currentState!.validate())
                               {
                                 verifyPhoneNumber(
+                                    context,
                                     phoneNumber: phoneNumberController.text,
                                     firebaseInstance: FirebaseAuth.instance,
                                     onSuccess: (message, cred) {
