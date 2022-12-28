@@ -1,26 +1,31 @@
 part of '../aveoauth.dart';
 
 mixin FirebaseEmailLogin {
-  signInWithFirebaseEmail(
-      {required Function showLoader,
-      required Function hideLoader,
+  signInWithFirebaseEmail(BuildContext context,
+      {bool enableLoader = true,
       required FirebaseAuth firebaseInstance,
       required SussessCallback onSuccess,
       required ErrorCallback onError,
       required String email,
       required String password}) async {
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       UserCredential userCredential = await firebaseInstance
           .signInWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onSuccess(
           '${userCredential.user?.displayName ?? ''} Logged in successfully',
           userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(errorMessage);
       (errorMessage);
     } catch (e) {
@@ -28,56 +33,67 @@ mixin FirebaseEmailLogin {
     }
   }
 
-  signUpWithFirebaseEmail(
-      {required Function showLoader,
-      required Function hideLoader,
+  signUpWithFirebaseEmail(BuildContext context,
+      {bool enableLoader = true,
       required FirebaseAuth firebaseInstance,
       required SussessCallback onSuccess,
       required ErrorCallback onError,
       required String email,
       required String password}) async {
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       UserCredential userCredential = await firebaseInstance
           .createUserWithEmailAndPassword(email: email, password: password);
       Mode().changeLoginMode = LoginMode.firebaseEmail;
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onSuccess('${userCredential.user?.displayName ?? ''} SignUp successfully',
           userCredential);
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(errorMessage);
     } catch (e) {
       logger.e("Email Error", e.toString());
     }
   }
 
-  resetPasswordWithFirebaseEmail({
-    required Function showLoader,
-    required Function hideLoader,
+  resetPasswordWithFirebaseEmail(
+    BuildContext context, {
+    bool enableLoader = true,
     required FirebaseAuth firebaseInstance,
     required GeneralSussessCallback onSuccess,
     required ErrorCallback onError,
     required String email,
   }) async {
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       await firebaseInstance.sendPasswordResetEmail(email: email);
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onSuccess('Email sent successfully');
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(errorMessage);
     } catch (e) {
       logger.e("Email Error", e.toString());
     }
   }
 
-  updatePasswordWithFirebaseEmail({
-    required Function showLoader,
-    required Function hideLoader,
+  updatePasswordWithFirebaseEmail(
+    BuildContext context, {
+    bool enableLoader = true,
     required FirebaseAuth firebaseInstance,
     required GeneralSussessCallback onSuccess,
     required ErrorCallback onError,
@@ -85,7 +101,9 @@ mixin FirebaseEmailLogin {
     required String newPassword,
   }) async {
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       User currentUser = FirebaseAuth.instance.currentUser!;
       String? userEmail = currentUser.email;
       AuthCredential authCredential = EmailAuthProvider.credential(
@@ -94,12 +112,16 @@ mixin FirebaseEmailLogin {
           await currentUser.reauthenticateWithCredential(authCredential);
       if (authResult.user != null) {
         await currentUser.updatePassword(newPassword);
-        hideLoader();
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onSuccess('Password updated successfully');
       }
     } on FirebaseAuthException catch (e) {
       String errorMessage = ExceptionHandlingHelper.handleException(e.code);
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(errorMessage);
     } catch (e) {
       logger.e("Password updating Error", e.toString());

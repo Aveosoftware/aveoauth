@@ -1,23 +1,11 @@
-import 'package:aveoauth/samples/sample.dart';
-
-class CustomLoaderSample extends Sample {
-  CustomLoaderSample(
-    String path,
-  ) : super(path);
-
-  String get import => '''
 import 'package:flutter/material.dart';
-''';
 
-  @override
-  String get content => '''$import
-
-showLoaderDialog(BuildContext context) {
+showLoader(BuildContext context) {
   var alert = Center(
       child: Container(
           decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
-              border: Border.all(),
+              border: Border.all(color: Colors.transparent),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           width: 100.0,
           height: 100.0,
@@ -35,9 +23,6 @@ showLoaderDialog(BuildContext context) {
       });
 }
 
-hideLoaderDialog(BuildContext context) {
+hideLoader(BuildContext context) {
   Navigator.pop(context);
-}
-
-''';
 }

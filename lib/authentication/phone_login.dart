@@ -5,27 +5,34 @@ typedef PhoneCodeSent = void Function(
   int? forceResendingToken,
 );
 mixin PhoneLogin {
-  verifyPhoneNumber(
-      {required Function showLoader,
-      required Function hideLoader,
+  verifyPhoneNumber(BuildContext context,
+      {bool enableLoader = true,
       required FirebaseAuth firebaseInstance,
       required PhoneSussessCallback onSuccess,
       required ErrorCallback onError,
       required String phoneNumber,
       required PhoneCodeSent codeSent}) async {
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       await firebaseInstance.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential userCredential) async {
-          await firebaseInstance.signInWithCredential(userCredential).then(
-              (value) => {
-                    hideLoader(),
+          await firebaseInstance
+              .signInWithCredential(userCredential)
+              .then((value) => {
+                    if (enableLoader)
+                      {
+                        hideLoader(context),
+                      },
                     onSuccess('Opt sent successfully', userCredential)
                   });
         },
         verificationFailed: (FirebaseAuthException e) {
-          hideLoader();
+          if (enableLoader) {
+            hideLoader(context);
+          }
           onError(e.message ?? 'Phone number verification failed');
           if (e.code == 'invalid-phone-number') {
             logger.e(
@@ -38,15 +45,16 @@ mixin PhoneLogin {
         },
       );
     } catch (error) {
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(e.toString());
       logger.e("Phone Login Error", error.toString());
     }
   }
 
-  signInWithPhone(
-      {required Function showLoader,
-      required Function hideLoader,
+  signInWithPhone(BuildContext context,
+      {bool enableLoader = true,
       required FirebaseAuth firebaseInstance,
       required PhoneSussessCallback onSuccess,
       required ErrorCallback onError,
@@ -57,14 +65,18 @@ mixin PhoneLogin {
         verificationId: verificationId, smsCode: smsCode);
     // Trigger the authentication flow
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       await firebaseInstance.signInWithCredential(credential).then((value) => {
-            hideLoader(),
+            if (enableLoader) {hideLoader(context)},
             onSuccess('$phoneNumber Logged in successfully', credential),
             Mode().changeLoginMode = LoginMode.phone,
           });
     } catch (e) {
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError(e.toString());
       logger.e("Phone Login Error", e.toString());
     }

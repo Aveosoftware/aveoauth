@@ -52,7 +52,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_social_login_button.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_snackbar.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_text_field.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_loader.dart';
 ${isPhoneLogin ? '''import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_verify_phone.dart';''' : ''}
 // TODO: Add imports
 ''';
@@ -115,12 +114,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                               text: 'Biometric Login',
                               isLabelVisible: false,
                               onPressed: () => signInWithBiometric(
-                                  showLoader: () {
-                                    showLoaderDialog(context);
-                                  },
-                                  hideLoader: () {
-                                    hideLoaderDialog(context);
-                                  },
+                                  context,
                                   onSuccess: (message) {
                                     // TODO: Add success logic here
                                     snackBar(message, context);
@@ -257,12 +251,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                             if (formKey.currentState!.validate())
                               {
                                 resetPasswordWithFirebaseEmail(
-                                  showLoader: () {
-                                    showLoaderDialog(context);
-                                  },
-                                  hideLoader: () {
-                                    hideLoaderDialog(context);
-                                  },
+                                  context,
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message) {
                                     snackBar(message, context);
@@ -283,12 +272,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 if (formKey.currentState!.validate())
                                   {
                                     signUpWithFirebaseEmail(
-                                        showLoader: () {
-                                          showLoaderDialog(context);
-                                        },
-                                        hideLoader: () {
-                                          hideLoaderDialog(context);
-                                        },
+                                        context,
                                         firebaseInstance: FirebaseAuth.instance,
                                         onSuccess: (message,cred) {
                                           snackBar(message, context);
@@ -309,12 +293,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 if (formKey.currentState!.validate())
                                   {
                                     signInWithFirebaseEmail(
-                                        showLoader: () {
-                                          showLoaderDialog(context);
-                                        },
-                                        hideLoader: () {
-                                          hideLoaderDialog(context);
-                                        },
+                                        context,
                                         firebaseInstance: FirebaseAuth.instance,
                                         onSuccess: (message, cred) {
                                           snackBar(message, context);
@@ -393,12 +372,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 "https://img.icons8.com/color/96/000000/google-logo.png",
                             text: 'Google Login',
                             onPressed: () => signInWithGoogle(
-                                showLoader: () {
-                                  showLoaderDialog(context);
-                                },
-                                hideLoader: () {
-                                  hideLoaderDialog(context);
-                                },
+                                context,
                                 firebaseInstance: FirebaseAuth.instance,
                                 onSuccess: (message, cred) {
                                   // TODO: Add success logic here
@@ -414,12 +388,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                   "https://www.facebook.com/images/fb_icon_325x325.png",
                               text: 'Facebook Login',
                               onPressed: () => signInWithFacebook(
-                                  showLoader: () {
-                                    showLoaderDialog(context);
-                                  },
-                                  hideLoader: () {
-                                    hideLoaderDialog(context);
-                                  },
+                                  context,
                                   firebaseInstance: FirebaseAuth.instance,
                                   onSuccess: (message ,cred) {
                                     // TODO: Add success logic here
@@ -429,19 +398,14 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                     snackBar(error, context);
                                   })),''' : ''}
                           ${isAppleLogin ? '''
-                          if (Platform.isIOS)
-                          CustomButton(
+                            if (Platform.isIOS)
+                            CustomButton(
                             isLabelVisible: $isSocialLoginButtonLableEnabled,
                             logoUrl:
                                 "https://img.icons8.com/ios-glyphs/344/mac-os.png",
                             text: 'Apple Login',
                             onPressed: () => signInWithApple(
-                                showLoader: () {
-                                  showLoaderDialog(context);
-                                },
-                                hideLoader: () {
-                                  hideLoaderDialog(context);
-                                },
+                                context,
                                 firebaseInstance: FirebaseAuth.instance,
                                 clientId:'$appleClientId',
                                 redirectUri:'$appleRedirectUri',
@@ -459,13 +423,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 "https://img.icons8.com/glyph-neue/344/github.png",
                             text: 'Github Login',
                             onPressed: () => signInWithGithub(
-                                showLoader: () {
-                                  showLoaderDialog(context);
-                                },
-                                hideLoader: () {
-                                  hideLoaderDialog(context);
-                                },
-                                context: context,
+                                context,
                                 clientId: '$githubClientId',
                                 clientSecret:
                                     '$githubClientSecret',
@@ -486,13 +444,7 @@ class _${_viewName.pascalCase}PageState extends State<${_viewName.pascalCase}Pag
                                 "https://img.icons8.com/color/344/twitter--v1.png",
                             text: 'Twitter Login',
                             onPressed: () => signInWithTwitter(
-                                showLoader: () {
-                                  showLoaderDialog(context);
-                                },
-                                hideLoader: () {
-                                  hideLoaderDialog(context);
-                                },
-                                context: context,
+                                context,
                                 apiKey: '$twitterApiKey',
                                 apiSecretKey:
                                     '$twitterApiSecretKey',

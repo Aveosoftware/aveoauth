@@ -1,11 +1,9 @@
 part of '../aveoauth.dart';
 
 mixin GithubLogin {
-  signInWithGithub(
-      {required Function showLoader,
-      required Function hideLoader,
+  signInWithGithub(BuildContext context,
+      {bool enableLoader = true,
       required FirebaseAuth firebaseInstance,
-      required BuildContext context,
       required String clientId,
       required String clientSecret,
       required String redirectUrl,
@@ -13,7 +11,9 @@ mixin GithubLogin {
       required ErrorCallback onError}) async {
     // Trigger the authentication flow
     try {
-      showLoader();
+      if (enableLoader) {
+        showLoader(context);
+      }
       // Create a GitHubSignIn instance
       final GitHubSignIn gitHubSignIn = GitHubSignIn(
           clientId: clientId,
@@ -30,32 +30,44 @@ mixin GithubLogin {
           UserCredential userCredential =
               await firebaseInstance.signInWithCredential(githubAuthCredential);
           Mode().changeLoginMode = LoginMode.github;
-          hideLoader();
+          if (enableLoader) {
+            hideLoader(context);
+          }
           onSuccess(
               '${userCredential.user?.displayName ?? ''} Logged in successfully',
               userCredential);
         } on FirebaseAuthException catch (e) {
           String errorMessage = ExceptionHandlingHelper.handleException(e.code);
           logger.e("Github Error", errorMessage);
-          hideLoader();
+          if (enableLoader) {
+            hideLoader(context);
+          }
           onError(errorMessage);
         }
       } else if (result.status == GitHubSignInResultStatus.cancelled) {
         logger.e("Github Login Error", result.errorMessage);
-        hideLoader();
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onError('Github Signup/Login cancelled');
       } else {
         logger.e("Github Login Error", result.errorMessage);
-        hideLoader();
+        if (enableLoader) {
+          hideLoader(context);
+        }
         onError('Something went wrong');
       }
     } on PlatformException catch (e) {
       logger.e("Github Platform Exception", e.toString());
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError('Something went wrong');
     } catch (error) {
       logger.e("Github Error", error.toString());
-      hideLoader();
+      if (enableLoader) {
+        hideLoader(context);
+      }
       onError('Something went wrong');
     }
   }

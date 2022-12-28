@@ -15,7 +15,6 @@ import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_ot
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_text_field.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_snackbar.dart';
 import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_social_login_button.dart';
-import 'package:${PubspecUtils.projectName}/$_viewName/${_viewName.snakeCase}_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 ''';
@@ -98,12 +97,7 @@ class _VerifyPhoneState extends State<VerifyPhone>
                             if (formKey.currentState!.validate())
                               {
                                 verifyPhoneNumber(
-                                    showLoader: () {
-                                      showLoaderDialog(context);
-                                    },
-                                    hideLoader: () {
-                                      hideLoaderDialog(context);
-                                    },
+                                    context,
                                     phoneNumber: phoneNumberController.text,
                                     firebaseInstance: FirebaseAuth.instance,
                                     onSuccess: (message, cred) {

@@ -6,7 +6,6 @@ import 'package:aveoauth/core/structure.dart';
 import 'package:aveoauth/functions/create/create_single_file.dart';
 import 'package:aveoauth/samples/otp_page.dart';
 import 'package:aveoauth/samples/page.dart';
-import 'package:aveoauth/samples/widget/loader.dart';
 import 'package:aveoauth/samples/widget/snackbar.dart';
 import 'package:aveoauth/samples/widget/social_login_button.dart';
 import 'package:aveoauth/samples/widget/text_field.dart';
@@ -333,17 +332,6 @@ class CreatePageCommand extends Command {
       snackbarDir,
       extraFolder,
       CustomSnackBarSample(
-        '',
-      ),
-      null,
-    );
-
-    handleFileCreate(
-      name,
-      'loader',
-      snackbarDir,
-      extraFolder,
-      CustomLoaderSample(
         '',
       ),
       null,
